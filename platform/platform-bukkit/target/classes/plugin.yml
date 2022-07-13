@@ -1,0 +1,13 @@
+name: KirraCoreBukkit
+main: net.sakuragame.eternal.kirracore.bukkit.KirraCoreBukkit
+version: ${project.version}
+
+author: "闲蛋"
+
+depend:
+  - MegumiLib
+  - Multiverse-Core
+  - ProtocolLib
+  - PlaceholderAPI
+  - GemsEconomy
+  - DataManager-Bukkit
