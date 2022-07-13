@@ -8,7 +8,6 @@ import net.sakuragame.eternal.kirracore.bukkit.annotation.KListener;
 import net.sakuragame.eternal.kirracore.bukkit.compat.CompatManager;
 import net.sakuragame.eternal.kirracore.bukkit.profile.ProfileManager;
 import net.sakuragame.eternal.kirracore.bukkit.storage.Database;
-import net.sakuragame.serversystems.manage.client.api.util.SchedulerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;

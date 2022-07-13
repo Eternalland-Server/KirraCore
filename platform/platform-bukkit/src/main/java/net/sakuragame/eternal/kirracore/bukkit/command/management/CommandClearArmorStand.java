@@ -15,7 +15,7 @@ public class CommandClearArmorStand {
         val count = new AtomicInteger(0);
         player.getWorld().getEntities()
                 .stream()
-                .filter(entity -> entity instanceof ArmorStand)
+                .filter(e -> e instanceof ArmorStand)
                 .map(entity -> (ArmorStand) entity)
                 .forEach(entity -> {
                     count.getAndIncrement();

@@ -32,8 +32,8 @@ public class PacketMatcher {
     public static IPacket match(@NotNull JsonObject jsonObj, @NotNull List<MatchType> types) {
         val id = jsonObj.get("packetID").getAsInt();
         val fPacket = PACKETS.stream()
-                .filter(packet -> packet.id() == id)
-                .filter(packet -> types.contains(packet.type()))
+                .filter(p -> p.id() == id)
+                .filter(p -> types.contains(p.type()))
                 .findFirst()
                 .orElse(null);
         if (fPacket == null) {

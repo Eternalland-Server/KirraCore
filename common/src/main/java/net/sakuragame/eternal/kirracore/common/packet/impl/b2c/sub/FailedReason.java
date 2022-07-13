@@ -19,7 +19,7 @@ public enum FailedReason {
     @Nullable
     public static FailedReason match(int num) {
         return Arrays.stream(values())
-                .filter(type -> type.num == num)
+                .filter(t -> t.num == num)
                 .findAny()
                 .orElse(null);
     }

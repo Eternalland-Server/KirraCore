@@ -18,8 +18,8 @@ public class PlayerTypeAdapter implements CommandTypeAdapter {
         List<String> completed = new ArrayList<>();
         Bukkit.getOnlinePlayers()
                 .stream()
-                .filter(player -> player.getName().toLowerCase().startsWith(string.toLowerCase()))
-                .forEach(player -> completed.add(player.getName()));
+                .filter(p -> p.getName().toLowerCase().startsWith(string.toLowerCase()))
+                .forEach(p -> completed.add(p.getName()));
         return completed;
     }
 }

@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 
 public class HeartBeatRunnable {
 
-    private static final String serverID = ClientManagerAPI.getServerID();
-    private static final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+    private static final String SERVER_ID = ClientManagerAPI.getServerID();
+    private static final ScheduledExecutorService SCHEDULER = Executors.newSingleThreadScheduledExecutor();
 
     public static void run() {
-        scheduler.scheduleAtFixedRate(() -> {
+        SCHEDULER.scheduleAtFixedRate(() -> {
             val playerIDs = Bukkit.getOnlinePlayers()
                     .stream()
                     .map(player -> ClientManagerAPI.getUserID(player.getUniqueId()))
@@ -26,7 +26,7 @@ public class HeartBeatRunnable {
 
             val packet = new C2BPacketHeartBeat();
 
-            packet.setServerID(serverID);
+            packet.setServerID(SERVER_ID);
             packet.setTps(getRecentTps());
             packet.setTime(System.currentTimeMillis());
             packet.setOnlinePlayers(playerIDs);

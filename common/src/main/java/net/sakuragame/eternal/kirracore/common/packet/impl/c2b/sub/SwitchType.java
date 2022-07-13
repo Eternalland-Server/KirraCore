@@ -19,7 +19,7 @@ public enum SwitchType {
     @Nullable
     public static SwitchType match(int num) {
         return Arrays.stream(values())
-                .filter(type -> type.num == num)
+                .filter(t -> t.num == num)
                 .findAny()
                 .orElse(null);
     }
