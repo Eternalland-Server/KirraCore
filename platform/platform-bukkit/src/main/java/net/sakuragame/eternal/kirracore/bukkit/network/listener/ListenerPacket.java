@@ -7,7 +7,7 @@ import net.sakuragame.eternal.kirracore.common.annotation.KComingPacketHandler;
 import net.sakuragame.eternal.kirracore.bukkit.function.FunctionRestart;
 import net.sakuragame.eternal.kirracore.bukkit.util.Broadcast;
 import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.B2CPacketStaffJoinOrQuit;
-import net.sakuragame.eternal.kirracore.common.packet.impl.a0c.A2CPacketServerShutdown;
+import net.sakuragame.eternal.kirracore.common.packet.impl.a2c.A2CPacketServerShutdown;
 import net.sakuragame.eternal.kirracore.common.util.CC;
 import net.sakuragame.serversystems.manage.client.api.ClientManagerAPI;
 

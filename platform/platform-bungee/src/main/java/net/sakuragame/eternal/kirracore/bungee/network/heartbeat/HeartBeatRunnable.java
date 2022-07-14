@@ -1,6 +1,7 @@
 package net.sakuragame.eternal.kirracore.bungee.network.heartbeat;
 
 import lombok.Getter;
+import lombok.val;
 import net.sakuragame.eternal.kirracore.bungee.KirraCoreBungee;
 import net.sakuragame.eternal.kirracore.common.packet.impl.c2b.C2BPacketHeartBeat;
 
@@ -30,7 +31,8 @@ public class HeartBeatRunnable {
         }), 0, 1, TimeUnit.SECONDS);
     }
 
-    public static void update(String serverID, C2BPacketHeartBeat packet) {
+    public static void update(C2BPacketHeartBeat packet) {
+        val serverID = packet.getServerID();
         if (HEART_BEAT_MAP.containsKey(serverID)) {
             HEART_BEAT_MAP.replace(serverID, packet);
             return;

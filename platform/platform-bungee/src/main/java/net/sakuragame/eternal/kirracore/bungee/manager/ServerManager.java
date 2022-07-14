@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.val;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.sakuragame.eternal.kirracore.bungee.KirraCoreBungee;
+import net.sakuragame.eternal.kirracore.bungee.event.ServerOfflineEvent;
+import net.sakuragame.eternal.kirracore.bungee.event.ServerOnlineEvent;
 import net.sakuragame.eternal.kirracore.bungee.util.Utils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -29,26 +31,31 @@ public class ServerManager {
             return;
         }
         servers.put(serverID, server);
+        KirraCoreBungee.getInstance().getProxy().getPluginManager().callEvent(new ServerOnlineEvent(serverID));
     }
 
     public void setOffline(@NotNull String serverID) {
-        servers.remove(serverID);
+        val server = Utils.getServerInfoByID(serverID);
+        if (server == null) {
+            return;
+        }
+        KirraCoreBungee.getInstance().getProxy().getPluginManager().callEvent(new ServerOfflineEvent(serverID));
     }
 
     @Nullable
-    public ServerInfo firstOrNull(@NotNull String serverPrefix) {
+    public ServerInfo getFirstOrNull(@NotNull String serverPrefix) {
         val name = servers.keySet()
                 .stream()
-                .filter(s -> s.equalsIgnoreCase(serverPrefix))
+                .filter(s -> s.toLowerCase().contains(serverPrefix.toLowerCase()))
                 .findAny();
         return name.map(servers::get).orElse(null);
     }
 
     @Nullable
-    public ServerInfo byBalancing(@NotNull String serverPrefix) {
+    public ServerInfo getByBalancing(@NotNull String serverPrefix) {
         val info = servers.values()
                 .stream()
-                .filter(s -> s.getName().equalsIgnoreCase(serverPrefix))
+                .filter(s -> s.getName().toLowerCase().contains(serverPrefix.toLowerCase()))
                 .min(Comparator.comparingInt(i -> i.getPlayers().size()));
         return info.orElse(null);
     }

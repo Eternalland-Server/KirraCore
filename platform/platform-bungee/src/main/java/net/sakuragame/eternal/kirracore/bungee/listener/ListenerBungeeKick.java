@@ -7,7 +7,7 @@ import net.md_5.bungee.api.event.ServerKickEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.sakuragame.eternal.kirracore.bungee.KirraCoreBungee;
-import net.sakuragame.eternal.kirracore.bungee.annotation.KListener;
+import net.sakuragame.eternal.kirracore.common.annotation.KListener;
 
 @KListener
 public class ListenerBungeeKick implements Listener {
@@ -33,7 +33,7 @@ public class ListenerBungeeKick implements Listener {
         if (kickedFrom.getName().toLowerCase().contains("rpg-spawn")) {
             kickTo = KirraCoreBungee.getInstance().getProxy().getServerInfo("rpg-login-1");
         } else {
-            ServerInfo hubServer = KirraCoreBungee.getInstance().getServerManager().byBalancing("rpg-spawn");
+            ServerInfo hubServer = KirraCoreBungee.getInstance().getServerManager().getByBalancing("rpg-spawn");
             kickTo = (hubServer == null) ? KirraCoreBungee.getInstance().getProxy().getServerInfo("rpg-login-1") : hubServer;
         }
         if (kickedFrom.equals(kickTo)) {

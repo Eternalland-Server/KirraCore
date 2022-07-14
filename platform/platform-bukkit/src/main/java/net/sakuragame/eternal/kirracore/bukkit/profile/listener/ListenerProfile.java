@@ -2,7 +2,7 @@ package net.sakuragame.eternal.kirracore.bukkit.profile.listener;
 
 import me.skymc.kirracoord.Coord;
 import net.sakuragame.eternal.kirracore.bukkit.KirraCoreBukkit;
-import net.sakuragame.eternal.kirracore.bukkit.annotation.KListener;
+import net.sakuragame.eternal.kirracore.common.annotation.KListener;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

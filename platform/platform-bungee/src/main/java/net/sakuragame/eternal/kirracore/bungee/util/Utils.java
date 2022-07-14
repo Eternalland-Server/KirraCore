@@ -15,4 +15,8 @@ public class Utils {
                 .findFirst()
                 .orElse(null);
     }
+
+    public static void printToConsole(String messages) {
+        KirraCoreBungee.getInstance().getProxy().getLogger().info(messages);
+    }
 }

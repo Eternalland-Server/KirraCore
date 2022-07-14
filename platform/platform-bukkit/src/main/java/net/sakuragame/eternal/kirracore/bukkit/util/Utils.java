@@ -12,6 +12,9 @@ import org.bukkit.entity.Player;
 public class Utils {
 
     @Getter
+    private static final String CURRENT_SERVER_NAME = ClientManagerAPI.getServerID();
+
+    @Getter
     private static final String ADMIN_PERMISSION = "admin";
 
     public static boolean isSpawnServer() {

@@ -2,7 +2,9 @@ package net.sakuragame.eternal.kirracore.bungee.network;
 
 import lombok.val;
 import net.sakuragame.eternal.kirracore.bungee.KirraCoreBungee;
+import net.sakuragame.eternal.kirracore.bungee.network.heartbeat.HeartBeatRunnable;
 import net.sakuragame.eternal.kirracore.common.KirraCoreCommon;
+import net.sakuragame.eternal.kirracore.common.packet.IPacket;
 import net.sakuragame.eternal.kirracore.common.packet.MatchType;
 import net.sakuragame.eternal.kirracore.common.packet.PacketListenerData;
 import net.sakuragame.eternal.kirracore.common.packet.PacketMatcher;
@@ -12,6 +14,7 @@ import net.sakuragame.serversystems.manage.proxy.api.ProxyManagerAPI;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class NetworkHandler {
 
     static final List<PacketListenerData> PACKET_LISTENERS = new ArrayList<>();
@@ -19,6 +22,19 @@ public class NetworkHandler {
     public static void init() {
         ProxyManagerAPI.getRedisManager().subscribe("KirraCore");
         ProxyManagerAPI.getRedisManager().registerListener(new PacketListener());
+
+        HeartBeatRunnable.run();
+    }
+
+
+    public static void sendPacket(IPacket packet, boolean async) {
+        val serialized = packet.serialized();
+        val str = serialized.toString();
+        if (async) {
+            ProxyManagerAPI.getRedisManager().publishAsync("KirraCore", "main", str);
+            return;
+        }
+        ProxyManagerAPI.getRedisManager().publish("KirraCore", "main", str);
     }
 
     private static class PacketListener extends RedisMessageListener {

@@ -18,9 +18,10 @@ import java.util.List;
 public class C2BPacketPlayerSwitchServer implements IPacket {
 
     private List<Integer> playerIDs;
+    private String serverFrom;
     private String serverTo;
 
-    private SwitchType type;
+    private SwitchType switchType;
 
     private String assignWorld;
     private String assignCoord;
@@ -40,8 +41,9 @@ public class C2BPacketPlayerSwitchServer implements IPacket {
         val jsonObj = new JsonObject();
         jsonObj.addProperty("packetID", id());
         jsonObj.addProperty("playerIDs", KirraCoreCommon.getGSON().toJson(playerIDs));
+        jsonObj.addProperty("serverFrom", serverFrom);
         jsonObj.addProperty("serverTo", serverTo);
-        jsonObj.addProperty("type", type.getNum());
+        jsonObj.addProperty("switchType", switchType.getNum());
         jsonObj.addProperty("assignWorld", assignWorld);
         jsonObj.addProperty("assignCoord", assignCoord);
         return jsonObj;
@@ -50,8 +52,9 @@ public class C2BPacketPlayerSwitchServer implements IPacket {
     @Override
     public void deserialized(JsonObject jsonObj) {
         this.playerIDs = KirraCoreCommon.getGSON().fromJson(jsonObj.get("playerID").getAsString(), TypeToken.INT_LIST_TYPE);
+        jsonObj.addProperty("serverFrom", serverFrom);
         this.serverTo = jsonObj.get("serverTo").getAsString();
-        this.type = SwitchType.match(jsonObj.get("type").getAsInt());
+        this.switchType = SwitchType.match(jsonObj.get("switchType").getAsInt());
         this.assignWorld = jsonObj.get("assignWorld").getAsString();
         this.assignCoord = jsonObj.get("assignCoord").getAsString();
     }

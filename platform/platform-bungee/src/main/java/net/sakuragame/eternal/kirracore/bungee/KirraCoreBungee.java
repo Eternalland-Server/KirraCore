@@ -4,8 +4,9 @@ import lombok.Getter;
 import lombok.val;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
-import net.sakuragame.eternal.kirracore.bungee.annotation.KListener;
 import net.sakuragame.eternal.kirracore.bungee.manager.ServerManager;
+import net.sakuragame.eternal.kirracore.bungee.network.NetworkHandler;
+import net.sakuragame.eternal.kirracore.common.annotation.KListener;
 import org.reflections.Reflections;
 
 @SuppressWarnings("SpellCheckingInspection")
@@ -27,6 +28,8 @@ public class KirraCoreBungee extends Plugin {
         serverManager = new ServerManager(this);
 
         ref = new Reflections("net.sakuragame.eternal.kirracore.bungee");
+
+        NetworkHandler.init();
 
         initListeners();
     }

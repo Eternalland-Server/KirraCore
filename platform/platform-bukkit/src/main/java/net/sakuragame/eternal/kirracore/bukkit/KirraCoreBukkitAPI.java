@@ -8,6 +8,7 @@ import net.sakuragame.eternal.kirracore.common.packet.impl.c2b.sub.SwitchType;
 import net.sakuragame.eternal.kirracore.common.util.CC;
 import net.sakuragame.eternal.kirracore.common.util.Numbers;
 import net.sakuragame.serversystems.manage.client.api.ClientManagerAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -16,6 +17,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -55,11 +57,16 @@ public class KirraCoreBukkitAPI {
                         .filter(uid -> uid != -1)
                         .collect(Collectors.toList())
         );
+        packet.setServerFrom(Utils.getCURRENT_SERVER_NAME());
         packet.setServerTo(serverID);
         packet.setAssignWorld(assignWorld == null ? "null" : assignWorld);
         packet.setAssignCoord(assignCoord == null ? "null" : assignCoord);
-        packet.setType(SwitchType.DIRECT);
+        packet.setSwitchType(SwitchType.DIRECT);
         NetworkHandler.sendPacket(packet, true);
+        Arrays.stream(uuids)
+                .map(Bukkit::getPlayer)
+                .filter(Objects::nonNull)
+                .forEach(KirraCoreBukkitAPI::showDefaultLoadingAnimation);
     }
 
     /**
@@ -78,11 +85,16 @@ public class KirraCoreBukkitAPI {
                         .filter(uid -> uid != -1)
                         .collect(Collectors.toList())
         );
+        packet.setServerFrom(Utils.getCURRENT_SERVER_NAME());
         packet.setServerTo(serverPrefix);
         packet.setAssignWorld("null");
         packet.setAssignCoord("null");
-        packet.setType(SwitchType.BY_BALANCING);
+        packet.setSwitchType(SwitchType.BY_BALANCING);
         NetworkHandler.sendPacket(packet, true);
+        Arrays.stream(uuids)
+                .map(Bukkit::getPlayer)
+                .filter(Objects::nonNull)
+                .forEach(KirraCoreBukkitAPI::showDefaultLoadingAnimation);
     }
 
     /**
