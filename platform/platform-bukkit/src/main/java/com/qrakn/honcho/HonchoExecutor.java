@@ -94,8 +94,6 @@ public class HonchoExecutor {
                     CommandTypeAdapter adapter = honcho.getTypeAdapter(parameter.getType());
 
                     if (adapter == null) {
-                        // TODO: throw error or log?
-
                         arguments.add(null);
                         continue;
                     }

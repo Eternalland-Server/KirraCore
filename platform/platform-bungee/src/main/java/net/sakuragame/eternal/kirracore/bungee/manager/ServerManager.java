@@ -1,38 +1,54 @@
 package net.sakuragame.eternal.kirracore.bungee.manager;
 
-import com.sun.istack.internal.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.val;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.sakuragame.eternal.kirracore.bungee.KirraCoreBungee;
+import net.sakuragame.eternal.kirracore.bungee.util.Utils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Optional;
 
-@AllArgsConstructor
 public class ServerManager {
 
-    private KirraCoreBungee instance;
+    @Getter
+    private final KirraCoreBungee plugin;
 
     @Getter
     private final HashMap<String, ServerInfo> servers = new HashMap<>();
 
+    public ServerManager(KirraCoreBungee plugin) {
+        this.plugin = plugin;
+    }
+
+    public void setOnline(@NotNull String serverID) {
+        val server = Utils.getServerInfoByID(serverID);
+        if (server == null) {
+            return;
+        }
+        servers.put(serverID, server);
+    }
+
+    public void setOffline(@NotNull String serverID) {
+        servers.remove(serverID);
+    }
+
     @Nullable
-    public ServerInfo getFirst(@NotNull String prefix) {
-        Optional<String> name = servers.keySet()
+    public ServerInfo firstOrNull(@NotNull String serverPrefix) {
+        val name = servers.keySet()
                 .stream()
-                .filter(s -> s.toLowerCase().contains(prefix.toLowerCase()))
+                .filter(s -> s.equalsIgnoreCase(serverPrefix))
                 .findAny();
         return name.map(servers::get).orElse(null);
     }
 
     @Nullable
-    public ServerInfo getByBalancing(@NotNull String prefix) {
-        Optional<ServerInfo> info = servers.values()
+    public ServerInfo byBalancing(@NotNull String serverPrefix) {
+        val info = servers.values()
                 .stream()
-                .filter(s -> s.getName().toLowerCase().contains(prefix.toLowerCase()))
+                .filter(s -> s.getName().equalsIgnoreCase(serverPrefix))
                 .min(Comparator.comparingInt(i -> i.getPlayers().size()));
         return info.orElse(null);
     }

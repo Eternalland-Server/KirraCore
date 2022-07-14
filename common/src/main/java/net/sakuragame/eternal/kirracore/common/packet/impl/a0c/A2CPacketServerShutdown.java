@@ -1,4 +1,4 @@
-package net.sakuragame.eternal.kirracore.common.packet.impl.c2c;
+package net.sakuragame.eternal.kirracore.common.packet.impl.a0c;
 
 import com.google.gson.JsonObject;
 import lombok.Data;
@@ -9,7 +9,7 @@ import net.sakuragame.eternal.kirracore.common.packet.MatchType;
 
 @Data
 @NoArgsConstructor
-public class C2CPacketServerShutdown implements IPacket {
+public class A2CPacketServerShutdown implements IPacket {
 
     private String serverID;
     private long delay;

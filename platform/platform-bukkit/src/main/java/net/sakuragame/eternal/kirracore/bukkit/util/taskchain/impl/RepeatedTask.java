@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.val;
-import net.sakuragame.eternal.kirracore.bukkit.KirraCoreBukkit;
 import net.sakuragame.eternal.kirracore.bukkit.util.taskchain.ITask;
+import net.sakuragame.eternal.kirracore.bukkit.util.taskchain.TaskChain;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,7 +33,8 @@ public class RepeatedTask implements ITask {
     }
 
     @Override
-    public @NotNull CompletableFuture<Boolean> execute() {
+    @NotNull
+    public CompletableFuture<Boolean> execute() {
         val future = new CompletableFuture<Boolean>();
         if (async) {
             new BukkitRunnable() {
@@ -47,7 +48,7 @@ public class RepeatedTask implements ITask {
                     }
                     runnable.run();
                 }
-            }.runTaskTimerAsynchronously(KirraCoreBukkit.getInstance(), 0L, period);
+            }.runTaskTimerAsynchronously(TaskChain.getINSTANCE(), 0L, period);
         } else {
             new BukkitRunnable() {
 
@@ -60,7 +61,7 @@ public class RepeatedTask implements ITask {
                     }
                     runnable.run();
                 }
-            }.runTaskTimer(KirraCoreBukkit.getInstance(), 0L, period);
+            }.runTaskTimer(TaskChain.getINSTANCE(), 0L, period);
         }
         return future;
     }

@@ -3,11 +3,11 @@ package net.sakuragame.eternal.kirracore.bukkit.network.listener;
 import lombok.val;
 import lombok.var;
 import net.sakuragame.eternal.kirracore.bukkit.KirraCoreBukkitAPI;
-import net.sakuragame.eternal.kirracore.bukkit.annotation.KComingPacketHandler;
+import net.sakuragame.eternal.kirracore.common.annotation.KComingPacketHandler;
 import net.sakuragame.eternal.kirracore.bukkit.function.FunctionRestart;
 import net.sakuragame.eternal.kirracore.bukkit.util.Broadcast;
 import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.B2CPacketStaffJoinOrQuit;
-import net.sakuragame.eternal.kirracore.common.packet.impl.c2c.C2CPacketServerShutdown;
+import net.sakuragame.eternal.kirracore.common.packet.impl.a0c.A2CPacketServerShutdown;
 import net.sakuragame.eternal.kirracore.common.util.CC;
 import net.sakuragame.serversystems.manage.client.api.ClientManagerAPI;
 
@@ -25,7 +25,7 @@ public class ListenerPacket {
     }
 
     @KComingPacketHandler
-    public void onServerShutdown(C2CPacketServerShutdown packet) {
+    public void onServerShutdown(A2CPacketServerShutdown packet) {
         val serverID = ClientManagerAPI.getServerID();
         if (!serverID.equals(packet.getServerID())) {
             return;

@@ -1,8 +1,7 @@
-package net.sakuragame.eternal.kirracore.bukkit.network;
+package net.sakuragame.eternal.kirracore.common.packet;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import net.sakuragame.eternal.kirracore.common.packet.IPacket;
 
 import java.lang.reflect.Method;
 

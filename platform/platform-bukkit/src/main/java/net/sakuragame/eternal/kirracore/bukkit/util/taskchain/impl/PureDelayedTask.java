@@ -20,7 +20,8 @@ public class PureDelayedTask implements ITask {
     }
 
     @Override
-    public @NotNull CompletableFuture<Boolean> execute() {
+    @NotNull
+    public CompletableFuture<Boolean> execute() {
         val future = new CompletableFuture<Boolean>();
         future.complete(true);
         return future;

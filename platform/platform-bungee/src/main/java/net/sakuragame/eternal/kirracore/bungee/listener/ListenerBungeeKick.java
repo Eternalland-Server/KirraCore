@@ -33,7 +33,7 @@ public class ListenerBungeeKick implements Listener {
         if (kickedFrom.getName().toLowerCase().contains("rpg-spawn")) {
             kickTo = KirraCoreBungee.getInstance().getProxy().getServerInfo("rpg-login-1");
         } else {
-            ServerInfo hubServer = KirraCoreBungee.getInstance().getServerManager().getByBalancing("rpg-spawn");
+            ServerInfo hubServer = KirraCoreBungee.getInstance().getServerManager().byBalancing("rpg-spawn");
             kickTo = (hubServer == null) ? KirraCoreBungee.getInstance().getProxy().getServerInfo("rpg-login-1") : hubServer;
         }
         if (kickedFrom.equals(kickTo)) {

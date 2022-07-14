@@ -1,4 +1,57 @@
 package net.sakuragame.eternal.kirracore.bungee.network;
 
+import lombok.val;
+import net.sakuragame.eternal.kirracore.bungee.KirraCoreBungee;
+import net.sakuragame.eternal.kirracore.common.KirraCoreCommon;
+import net.sakuragame.eternal.kirracore.common.packet.MatchType;
+import net.sakuragame.eternal.kirracore.common.packet.PacketListenerData;
+import net.sakuragame.eternal.kirracore.common.packet.PacketMatcher;
+import net.sakuragame.serversystems.manage.api.redis.RedisMessageListener;
+import net.sakuragame.serversystems.manage.proxy.api.ProxyManagerAPI;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class NetworkHandler {
+
+    static final List<PacketListenerData> PACKET_LISTENERS = new ArrayList<>();
+
+    public static void init() {
+        ProxyManagerAPI.getRedisManager().subscribe("KirraCore");
+        ProxyManagerAPI.getRedisManager().registerListener(new PacketListener());
+    }
+
+    private static class PacketListener extends RedisMessageListener {
+
+        public PacketListener() {
+            super(false, "KirraCore");
+        }
+
+        @Override
+        public void onMessage(String serviceName, String sourceServer, String channel, String[] messages) {
+            KirraCoreBungee.getInstance().getProxy().getScheduler().runAsync(KirraCoreBungee.getInstance(), () -> {
+                if (messages.length < 1) {
+                    return;
+                }
+                val jsonObj = KirraCoreCommon.getJSON_PARSER().parse(messages[0]).getAsJsonObject();
+                val packet = PacketMatcher.match(jsonObj, new ArrayList<MatchType>() {{
+                    add(MatchType.C2B);
+                }});
+                if (packet == null) {
+                    return;
+                }
+                packet.deserialized(jsonObj);
+                PACKET_LISTENERS.forEach(listener -> {
+                    if (listener.matches(packet)) {
+                        try {
+                            listener.getMethod().invoke(listener.getInstance(), packet);
+                        } catch (Exception exception) {
+                            System.out.println("[NetworkHandler] Failed to handle message");
+                            exception.printStackTrace();
+                        }
+                    }
+                });
+            });
+        }
+    }
 }

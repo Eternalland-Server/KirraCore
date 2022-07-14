@@ -15,7 +15,7 @@ public class KirraCoreBungee extends Plugin {
     private static KirraCoreBungee instance;
 
     @Getter
-    private static ServerManager serverManager;
+    private ServerManager serverManager;
 
     @Getter
     private Reflections ref;
@@ -25,7 +25,6 @@ public class KirraCoreBungee extends Plugin {
         instance = this;
 
         serverManager = new ServerManager(this);
-
 
         ref = new Reflections("net.sakuragame.eternal.kirracore.bungee");
 

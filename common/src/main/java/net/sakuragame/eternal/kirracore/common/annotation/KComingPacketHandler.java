@@ -1,4 +1,4 @@
-package net.sakuragame.eternal.kirracore.bukkit.annotation;
+package net.sakuragame.eternal.kirracore.common.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
