@@ -19,6 +19,14 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ycraft-releases</id>
+            <name>maven-snapshots</name>
+            <url>https://maven.ycraft.cn/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <repositories>
         <repository>
             <id>ycraft</id>
