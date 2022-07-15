@@ -17,7 +17,7 @@ public class ListenerServer implements Listener {
     @EventHandler
     public void onServerOnline(ServerOnlineEvent event) {
         val serverID = event.getServerID();
-        Utils.printToConsole(String.format("[ServerManager] 服务器 %s 上线了", serverID));
+        Utils.printToConsole("[ServerManager] 服务器 " + serverID + " 上线了.");
         KirraCoreBungee.getInstance().getProxy().getPlayers()
                 .stream()
                 .filter(p -> p.hasPermission("admin"))
@@ -27,7 +27,7 @@ public class ListenerServer implements Listener {
     @EventHandler
     public void onServerOffline(ServerOfflineEvent event) {
         val serverID = event.getServerID();
-        Utils.printToConsole(String.format("[ServerManager] 服务器 %s 下线了", serverID));
+        Utils.printToConsole("[ServerManager] 服务器 " + serverID + " 下线了.");
         KirraCoreBungee.getInstance().getProxy().getPlayers()
                 .stream()
                 .filter(p -> p.hasPermission("admin"))

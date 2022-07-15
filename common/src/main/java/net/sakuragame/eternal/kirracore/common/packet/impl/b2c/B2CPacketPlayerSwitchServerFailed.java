@@ -17,6 +17,7 @@ import java.util.List;
 public class B2CPacketPlayerSwitchServerFailed implements IPacket {
 
     private List<Integer> playerIDs;
+    private String serverFrom;
     private String serverTo;
 
     private FailedReason reason;
@@ -35,6 +36,7 @@ public class B2CPacketPlayerSwitchServerFailed implements IPacket {
     public JsonObject serialized() {
         val jsonObj = new JsonObject();
         jsonObj.addProperty("playerIDs", KirraCoreCommon.getGSON().toJson(playerIDs));
+        jsonObj.addProperty("serverFrom", serverFrom);
         jsonObj.addProperty("serverTo", serverTo);
         jsonObj.addProperty("reason", reason.getNum());
         return jsonObj;
@@ -43,6 +45,7 @@ public class B2CPacketPlayerSwitchServerFailed implements IPacket {
     @Override
     public void deserialized(JsonObject jsonObj) {
         this.playerIDs = KirraCoreCommon.getGSON().fromJson(jsonObj.get("playerID").getAsString(), TypeToken.INT_LIST_TYPE);
+        this.serverFrom = jsonObj.get("serverFrom").getAsString();
         this.serverTo = jsonObj.get("serverTo").getAsString();
         this.reason = FailedReason.match(jsonObj.get("type").getAsInt());
     }

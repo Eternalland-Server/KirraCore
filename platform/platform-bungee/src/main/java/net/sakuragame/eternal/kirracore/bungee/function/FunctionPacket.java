@@ -6,48 +6,54 @@ import net.sakuragame.eternal.kirracore.bungee.KirraCoreBungee;
 import net.sakuragame.eternal.kirracore.bungee.network.NetworkHandler;
 import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.B2CPacketPlayerSwitchServer;
 import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.B2CPacketPlayerSwitchServerFailed;
+import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.B2CPacketStaffJoinOrQuit;
 import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.sub.FailedReason;
+import net.sakuragame.eternal.kirracore.common.packet.impl.c2b.C2BPacketPlayerSwitchServer;
 import net.sakuragame.serversystems.manage.proxy.api.ProxyManagerAPI;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class FunctionTeleport {
+public class FunctionPacket {
 
-    public static void sendTeleportFailedPacket(@NotNull List<Integer> playerIDs, @NotNull String serverID) {
+    public static void sendTeleportFailedPacket(@NotNull C2BPacketPlayerSwitchServer c2bPacket) {
         val packet = new B2CPacketPlayerSwitchServerFailed();
-        packet.setPlayerIDs(playerIDs);
-        packet.setServerTo(serverID);
+        packet.setPlayerIDs(c2bPacket.getPlayerIDs());
+        packet.setServerTo(c2bPacket.getServerFrom());
+        packet.setServerTo(c2bPacket.getServerTo());
         packet.setReason(FailedReason.SERVER_CLOSED);
         NetworkHandler.sendPacket(packet, true);
     }
 
-    public static void doTeleport(
-            @NotNull List<Integer> playerIDs,
-            @NotNull String serverID,
-            @NotNull ServerInfo serverTo,
-            @Nullable String assignWorld,
-            @Nullable String assignCoord
-    ) {
+    public static void sendTeleportPacket(@NotNull C2BPacketPlayerSwitchServer c2bPacket, @NotNull ServerInfo server) {
         val packet = new B2CPacketPlayerSwitchServer();
-        packet.setPlayerIDs(playerIDs);
-        packet.setServerTo(serverID);
-        packet.setAssignWorld(assignWorld);
-        packet.setAssignCoord(assignCoord);
+        packet.setPlayerIDs(c2bPacket.getPlayerIDs());
+        packet.setServerFrom(c2bPacket.getServerFrom());
+        packet.setServerTo(c2bPacket.getServerTo());
+        packet.setAssignWorld(c2bPacket.getAssignWorld());
+        packet.setAssignCoord(c2bPacket.getAssignCoord());
         NetworkHandler.sendPacket(packet, true);
         KirraCoreBungee.getInstance().getProxy().getScheduler().schedule(KirraCoreBungee.getInstance(), () -> {
-            val players = playerIDs
+            val players = c2bPacket.getPlayerIDs()
                     .stream()
                     .map(ProxyManagerAPI::getUserUUID)
                     .map(KirraCoreBungee.getInstance().getProxy()::getPlayer)
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());
-            players.forEach(player -> player.connect(serverTo));
+            players.forEach(player -> player.connect(server));
         }, 1, TimeUnit.SECONDS);
+    }
+
+    public static void sendStaffJoinOrQuitPacket(
+            @NotNull String staffName,
+            boolean isJoin
+    ) {
+        val packet = new B2CPacketStaffJoinOrQuit();
+        packet.setStaffName(staffName);
+        packet.setJoin(isJoin);
+        NetworkHandler.sendPacket(packet, true);
     }
 }

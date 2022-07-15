@@ -2,9 +2,9 @@ package net.sakuragame.eternal.kirracore.bukkit.function;
 
 import lombok.val;
 import net.sakuragame.eternal.kirracore.bukkit.KirraCoreBukkit;
-import net.sakuragame.eternal.kirracore.bukkit.annotation.KListener;
 import net.sakuragame.eternal.kirracore.bukkit.util.Broadcast;
 import net.sakuragame.eternal.kirracore.bukkit.util.taskchain.TaskChain;
+import net.sakuragame.eternal.kirracore.common.annotation.KListener;
 import net.sakuragame.eternal.kirracore.common.util.CC;
 import net.sakuragame.eternal.kirracore.common.util.Lang;
 import org.bukkit.Bukkit;

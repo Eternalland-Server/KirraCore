@@ -1,31 +1,31 @@
 package net.sakuragame.eternal.kirracore.bukkit;
 
+import lombok.Getter;
 import lombok.val;
-import net.sakuragame.eternal.kirracore.bukkit.network.NetworkHandler;
+import net.sakuragame.eternal.kirracore.bukkit.function.FunctionPacket;
 import net.sakuragame.eternal.kirracore.bukkit.util.Utils;
-import net.sakuragame.eternal.kirracore.common.packet.impl.c2b.C2BPacketPlayerSwitchServer;
+import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.sub.TResult;
 import net.sakuragame.eternal.kirracore.common.packet.impl.c2b.sub.SwitchType;
 import net.sakuragame.eternal.kirracore.common.util.CC;
 import net.sakuragame.eternal.kirracore.common.util.Numbers;
-import net.sakuragame.serversystems.manage.client.api.ClientManagerAPI;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class KirraCoreBukkitAPI {
 
     protected static final HashMap<UUID, BukkitTask> LOADING_TITLE_TASK_MAP = new HashMap<>();
+
+    @Getter
+    private static final HashMap<UUID, CompletableFuture<TResult>> TELEPORTING_MAP = new HashMap<>();
 
     /**
      * 检查玩家是否拥有管理员权限。
@@ -44,29 +44,17 @@ public class KirraCoreBukkitAPI {
      * @param uuids       玩家 UUID。
      * @param assignWorld 指定世界。
      * @param assignCoord 指定点位。 (与 KirraCoord 挂钩)
+     * @return 传送结果。
      */
-    public static void teleportPlayerToAnotherServer(@NotNull String serverID,
-                                                     @NotNull UUID[] uuids,
-                                                     @Nullable String assignWorld,
-                                                     @Nullable String assignCoord
+    public static CompletableFuture<TResult> teleportPlayerToAnotherServer(@NotNull String serverID,
+                                                                           @NotNull UUID[] uuids,
+                                                                           @Nullable String assignWorld,
+                                                                           @Nullable String assignCoord
     ) {
-        val packet = new C2BPacketPlayerSwitchServer();
-        packet.setPlayerIDs(
-                Arrays.stream(uuids)
-                        .map(ClientManagerAPI::getUserID)
-                        .filter(uid -> uid != -1)
-                        .collect(Collectors.toList())
-        );
-        packet.setServerFrom(Utils.getCURRENT_SERVER_NAME());
-        packet.setServerTo(serverID);
-        packet.setAssignWorld(assignWorld == null ? "null" : assignWorld);
-        packet.setAssignCoord(assignCoord == null ? "null" : assignCoord);
-        packet.setSwitchType(SwitchType.DIRECT);
-        NetworkHandler.sendPacket(packet, true);
-        Arrays.stream(uuids)
-                .map(Bukkit::getPlayer)
-                .filter(Objects::nonNull)
-                .forEach(KirraCoreBukkitAPI::showDefaultLoadingAnimation);
+        val future = new CompletableFuture<TResult>();
+        FunctionPacket.sendC2BPacket(serverID, uuids, assignWorld, assignCoord, SwitchType.DIRECT);
+        FunctionPacket.handleC2BFuture(uuids, future);
+        return future;
     }
 
     /**
@@ -74,27 +62,15 @@ public class KirraCoreBukkitAPI {
      *
      * @param serverPrefix 目标服务器 ID 前缀。
      * @param uuids        玩家 UUID。
+     * @return 传送结果。
      */
-    public static void teleportPlayerToServerByBalancing(@NotNull String serverPrefix,
-                                                         @NotNull UUID... uuids
+    public static CompletableFuture<TResult> teleportPlayerToServerByBalancing(@NotNull String serverPrefix,
+                                                                               @NotNull UUID... uuids
     ) {
-        val packet = new C2BPacketPlayerSwitchServer();
-        packet.setPlayerIDs(
-                Arrays.stream(uuids)
-                        .map(ClientManagerAPI::getUserID)
-                        .filter(uid -> uid != -1)
-                        .collect(Collectors.toList())
-        );
-        packet.setServerFrom(Utils.getCURRENT_SERVER_NAME());
-        packet.setServerTo(serverPrefix);
-        packet.setAssignWorld("null");
-        packet.setAssignCoord("null");
-        packet.setSwitchType(SwitchType.BY_BALANCING);
-        NetworkHandler.sendPacket(packet, true);
-        Arrays.stream(uuids)
-                .map(Bukkit::getPlayer)
-                .filter(Objects::nonNull)
-                .forEach(KirraCoreBukkitAPI::showDefaultLoadingAnimation);
+        val future = new CompletableFuture<TResult>();
+        FunctionPacket.sendC2BPacket(serverPrefix, uuids, null, null, SwitchType.DIRECT);
+        FunctionPacket.handleC2BFuture(uuids, future);
+        return future;
     }
 
     /**

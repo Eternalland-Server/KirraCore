@@ -17,6 +17,7 @@ import java.util.List;
 public class B2CPacketPlayerSwitchServer implements IPacket {
 
     private List<Integer> playerIDs;
+    private String serverFrom;
     private String serverTo;
 
     private String assignWorld;
@@ -37,6 +38,7 @@ public class B2CPacketPlayerSwitchServer implements IPacket {
         val jsonObj = new JsonObject();
         jsonObj.addProperty("packetID", id());
         jsonObj.addProperty("playerIDs", KirraCoreCommon.getGSON().toJson(playerIDs));
+        jsonObj.addProperty("serverFrom", serverFrom);
         jsonObj.addProperty("serverTo", serverTo);
         jsonObj.addProperty("assignWorld", assignWorld);
         jsonObj.addProperty("assignCoord", assignCoord);
@@ -46,6 +48,7 @@ public class B2CPacketPlayerSwitchServer implements IPacket {
     @Override
     public void deserialized(JsonObject jsonObj) {
         this.playerIDs = KirraCoreCommon.getGSON().fromJson(jsonObj.get("playerID").getAsString(), TypeToken.INT_LIST_TYPE);
+        this.serverFrom = jsonObj.get("serverFrom").getAsString();
         this.serverTo = jsonObj.get("serverTo").getAsString();
         this.assignWorld = jsonObj.get("assignWorld").getAsString();
         this.assignCoord = jsonObj.get("assignCoord").getAsString();
