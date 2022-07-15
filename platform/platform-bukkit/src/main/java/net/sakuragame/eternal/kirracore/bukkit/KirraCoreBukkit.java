@@ -40,7 +40,7 @@ public class KirraCoreBukkit extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        
+
         ref = new Reflections("net.sakuragame.eternal.kirracore.bukkit");
 
         saveDefaultConfig();
