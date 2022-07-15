@@ -6,6 +6,7 @@ import net.sakuragame.eternal.kirracore.bukkit.function.FunctionPacket;
 import net.sakuragame.eternal.kirracore.bukkit.util.Utils;
 import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.sub.TResult;
 import net.sakuragame.eternal.kirracore.common.packet.impl.c2b.sub.SwitchType;
+import net.sakuragame.eternal.kirracore.common.packet.impl.sub.AssignType;
 import net.sakuragame.eternal.kirracore.common.util.CC;
 import net.sakuragame.eternal.kirracore.common.util.Numbers;
 import org.bukkit.entity.Player;
@@ -42,17 +43,17 @@ public class KirraCoreBukkitAPI {
      *
      * @param serverID    目标服务器 ID。
      * @param uuids       玩家 UUID。
-     * @param assignWorld 指定世界。
-     * @param assignCoord 指定点位。 (与 KirraCoord 挂钩)
+     * @param assignType  指定类型。
+     * @param assignValue 指定数据。
      * @return 传送结果。
      */
     public static CompletableFuture<TResult> teleportPlayerToAnotherServer(@NotNull String serverID,
-                                                                           @NotNull UUID[] uuids,
-                                                                           @Nullable String assignWorld,
-                                                                           @Nullable String assignCoord
+                                                                           @Nullable AssignType assignType,
+                                                                           @Nullable String assignValue,
+                                                                           @NotNull UUID[] uuids
     ) {
         val future = new CompletableFuture<TResult>();
-        FunctionPacket.sendC2BPacket(serverID, uuids, assignWorld, assignCoord, SwitchType.DIRECT);
+        FunctionPacket.sendC2BPacket(serverID, uuids, assignType, assignValue, SwitchType.DIRECT);
         FunctionPacket.handleC2BFuture(uuids, future);
         return future;
     }

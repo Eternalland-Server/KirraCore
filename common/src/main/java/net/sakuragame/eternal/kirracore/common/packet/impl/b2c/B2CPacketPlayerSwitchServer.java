@@ -7,6 +7,7 @@ import lombok.val;
 import net.sakuragame.eternal.kirracore.common.KirraCoreCommon;
 import net.sakuragame.eternal.kirracore.common.packet.IPacket;
 import net.sakuragame.eternal.kirracore.common.packet.MatchType;
+import net.sakuragame.eternal.kirracore.common.packet.impl.sub.AssignType;
 import net.sakuragame.eternal.kirracore.common.util.TypeToken;
 
 import java.util.List;
@@ -20,8 +21,8 @@ public class B2CPacketPlayerSwitchServer implements IPacket {
     private String serverFrom;
     private String serverTo;
 
-    private String assignWorld;
-    private String assignCoord;
+    private AssignType assignType;
+    private String assignValue;
 
     @Override
     public MatchType type() {
@@ -40,8 +41,8 @@ public class B2CPacketPlayerSwitchServer implements IPacket {
         jsonObj.addProperty("playerIDs", KirraCoreCommon.getGSON().toJson(playerIDs));
         jsonObj.addProperty("serverFrom", serverFrom);
         jsonObj.addProperty("serverTo", serverTo);
-        jsonObj.addProperty("assignWorld", assignWorld);
-        jsonObj.addProperty("assignCoord", assignCoord);
+        jsonObj.addProperty("assignType", assignType.getNum());
+        jsonObj.addProperty("assignValue", assignValue);
         return jsonObj;
     }
 
@@ -50,7 +51,7 @@ public class B2CPacketPlayerSwitchServer implements IPacket {
         this.playerIDs = KirraCoreCommon.getGSON().fromJson(jsonObj.get("playerID").getAsString(), TypeToken.INT_LIST_TYPE);
         this.serverFrom = jsonObj.get("serverFrom").getAsString();
         this.serverTo = jsonObj.get("serverTo").getAsString();
-        this.assignWorld = jsonObj.get("assignWorld").getAsString();
-        this.assignCoord = jsonObj.get("assignCoord").getAsString();
+        this.assignType = AssignType.match(jsonObj.get("assignType").getAsInt());
+        this.assignValue = jsonObj.get("assignValue").getAsString();
     }
 }

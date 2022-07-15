@@ -2,10 +2,10 @@ package net.sakuragame.eternal.kirracore.bukkit.listener.profile;
 
 import lombok.val;
 import net.sakuragame.eternal.kirracore.bukkit.KirraCoreBukkit;
-import net.sakuragame.eternal.kirracore.bukkit.annotation.KListener;
 import net.sakuragame.eternal.kirracore.bukkit.profile.Profile;
 import net.sakuragame.eternal.kirracore.bukkit.util.Scheduler;
 import net.sakuragame.eternal.kirracore.bukkit.util.Utils;
+import net.sakuragame.eternal.kirracore.common.annotation.KListener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

@@ -2,8 +2,8 @@ package net.sakuragame.eternal.kirracore.bukkit.listener;
 
 import com.alibaba.dcm.DnsCacheManipulator;
 import net.sakuragame.eternal.kirracore.bukkit.KirraCoreBukkit;
-import net.sakuragame.eternal.kirracore.bukkit.annotation.KListener;
 import net.sakuragame.eternal.kirracore.bukkit.util.Utils;
+import net.sakuragame.eternal.kirracore.common.annotation.KListener;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,7 +15,7 @@ import java.util.Objects;
 @KListener
 public class ListenerMojangBlocker implements Listener {
 
-    static {
+    public ListenerMojangBlocker() {
         if (Bukkit.getOnlineMode()) {
             Utils.info("Mojang 全局屏蔽服务无法在正版模式下启用.");
         } else {
@@ -38,6 +38,9 @@ public class ListenerMojangBlocker implements Listener {
 
     @EventHandler
     public void onServerClose(PluginDisableEvent event) {
+        if (Bukkit.getOnlineMode()) {
+            return;
+        }
         if (Objects.equals(event.getPlugin().getName(), KirraCoreBukkit.getInstance().getName())) {
             DnsCacheManipulator.clearDnsCache();
         }

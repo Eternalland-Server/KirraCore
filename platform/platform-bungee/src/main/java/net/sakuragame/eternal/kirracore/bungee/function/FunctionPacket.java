@@ -33,8 +33,8 @@ public class FunctionPacket {
         packet.setPlayerIDs(c2bPacket.getPlayerIDs());
         packet.setServerFrom(c2bPacket.getServerFrom());
         packet.setServerTo(c2bPacket.getServerTo());
-        packet.setAssignWorld(c2bPacket.getAssignWorld());
-        packet.setAssignCoord(c2bPacket.getAssignCoord());
+        packet.setAssignType(c2bPacket.getAssignType());
+        packet.setAssignValue(c2bPacket.getAssignValue());
         NetworkHandler.sendPacket(packet, true);
         KirraCoreBungee.getInstance().getProxy().getScheduler().schedule(KirraCoreBungee.getInstance(), () -> {
             val players = c2bPacket.getPlayerIDs()

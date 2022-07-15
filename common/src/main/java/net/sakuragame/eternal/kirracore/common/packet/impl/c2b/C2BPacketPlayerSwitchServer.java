@@ -8,6 +8,7 @@ import net.sakuragame.eternal.kirracore.common.KirraCoreCommon;
 import net.sakuragame.eternal.kirracore.common.packet.IPacket;
 import net.sakuragame.eternal.kirracore.common.packet.MatchType;
 import net.sakuragame.eternal.kirracore.common.packet.impl.c2b.sub.SwitchType;
+import net.sakuragame.eternal.kirracore.common.packet.impl.sub.AssignType;
 import net.sakuragame.eternal.kirracore.common.util.TypeToken;
 
 import java.util.List;
@@ -23,8 +24,8 @@ public class C2BPacketPlayerSwitchServer implements IPacket {
 
     private SwitchType switchType;
 
-    private String assignWorld;
-    private String assignCoord;
+    private AssignType assignType;
+    private String assignValue;
 
     @Override
     public MatchType type() {
@@ -44,18 +45,18 @@ public class C2BPacketPlayerSwitchServer implements IPacket {
         jsonObj.addProperty("serverFrom", serverFrom);
         jsonObj.addProperty("serverTo", serverTo);
         jsonObj.addProperty("switchType", switchType.getNum());
-        jsonObj.addProperty("assignWorld", assignWorld);
-        jsonObj.addProperty("assignCoord", assignCoord);
+        jsonObj.addProperty("assignType", assignType.getNum());
+        jsonObj.addProperty("assignValue", assignValue);
         return jsonObj;
     }
 
     @Override
     public void deserialized(JsonObject jsonObj) {
         this.playerIDs = KirraCoreCommon.getGSON().fromJson(jsonObj.get("playerID").getAsString(), TypeToken.INT_LIST_TYPE);
-        jsonObj.addProperty("serverFrom", serverFrom);
+        this.serverFrom = jsonObj.get("serverFrom").getAsString();
         this.serverTo = jsonObj.get("serverTo").getAsString();
         this.switchType = SwitchType.match(jsonObj.get("switchType").getAsInt());
-        this.assignWorld = jsonObj.get("assignWorld").getAsString();
-        this.assignCoord = jsonObj.get("assignCoord").getAsString();
+        this.assignType = AssignType.match(jsonObj.get("assignType").getAsInt());
+        this.assignValue = jsonObj.get("assignValue").getAsString();
     }
 }

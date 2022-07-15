@@ -7,6 +7,7 @@ import net.sakuragame.eternal.kirracore.bukkit.util.Utils;
 import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.sub.TResult;
 import net.sakuragame.eternal.kirracore.common.packet.impl.c2b.C2BPacketPlayerSwitchServer;
 import net.sakuragame.eternal.kirracore.common.packet.impl.c2b.sub.SwitchType;
+import net.sakuragame.eternal.kirracore.common.packet.impl.sub.AssignType;
 import net.sakuragame.serversystems.manage.client.api.ClientManagerAPI;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
@@ -18,15 +19,14 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
-@SuppressWarnings("SpellCheckingInspection")
 public class FunctionPacket {
 
     public static void sendC2BPacket(
             @NotNull String serverID,
             @NotNull UUID[] uuids,
-            @Nullable String assignWorld,
-            @Nullable String assignCoord,
-            @NotNull SwitchType type
+            @Nullable AssignType assignType,
+            @Nullable String assignValue,
+            @NotNull SwitchType switchType
     ) {
         val packet = new C2BPacketPlayerSwitchServer();
         packet.setPlayerIDs(
@@ -37,9 +37,9 @@ public class FunctionPacket {
         );
         packet.setServerFrom(Utils.getCURRENT_SERVER_NAME());
         packet.setServerTo(serverID);
-        packet.setAssignWorld(assignWorld == null ? "null" : assignWorld);
-        packet.setAssignCoord(assignCoord == null ? "null" : assignCoord);
-        packet.setSwitchType(SwitchType.DIRECT);
+        packet.setAssignType(assignType == null ? AssignType.NONE : assignType);
+        packet.setAssignValue(assignValue == null ? "null" : assignValue);
+        packet.setSwitchType(switchType);
         NetworkHandler.sendPacket(packet, true);
     }
 

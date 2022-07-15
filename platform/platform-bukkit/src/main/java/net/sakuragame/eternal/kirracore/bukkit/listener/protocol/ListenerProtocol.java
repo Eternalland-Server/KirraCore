@@ -8,7 +8,7 @@ import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import lombok.val;
 import net.sakuragame.eternal.kirracore.bukkit.KirraCoreBukkit;
-import net.sakuragame.eternal.kirracore.bukkit.annotation.KListener;
+import net.sakuragame.eternal.kirracore.common.annotation.KListener;
 import org.bukkit.event.Listener;
 
 @KListener

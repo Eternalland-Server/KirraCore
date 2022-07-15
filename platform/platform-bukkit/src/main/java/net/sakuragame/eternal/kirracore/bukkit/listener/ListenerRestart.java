@@ -1,9 +1,9 @@
 package net.sakuragame.eternal.kirracore.bukkit.listener;
 
-import net.sakuragame.eternal.kirracore.bukkit.annotation.KListener;
 import net.sakuragame.eternal.kirracore.bukkit.function.FunctionRestart;
 import net.sakuragame.eternal.kirracore.bukkit.util.Scheduler;
 import net.sakuragame.eternal.kirracore.bukkit.util.Utils;
+import net.sakuragame.eternal.kirracore.common.annotation.KListener;
 import net.sakuragame.serversystems.manage.client.api.event.NewDayEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

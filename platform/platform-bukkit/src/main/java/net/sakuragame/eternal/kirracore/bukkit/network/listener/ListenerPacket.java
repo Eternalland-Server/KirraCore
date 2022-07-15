@@ -14,6 +14,7 @@ import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.B2CPacketPlayerSw
 import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.B2CPacketPlayerSwitchServerFailed;
 import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.B2CPacketStaffJoinOrQuit;
 import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.sub.TResult;
+import net.sakuragame.eternal.kirracore.common.packet.impl.sub.AssignType;
 import net.sakuragame.eternal.kirracore.common.util.CC;
 import net.sakuragame.serversystems.manage.client.api.ClientManagerAPI;
 import org.bukkit.Bukkit;
@@ -50,16 +51,16 @@ public class ListenerPacket {
                     });
             return;
         }
-        if (packet.getServerTo().equals(Utils.getCURRENT_SERVER_NAME())) {
+        if (packet.getServerTo().equals(Utils.getCURRENT_SERVER_NAME()) && packet.getAssignType() != AssignType.NONE) {
             val uuids = packet.getPlayerIDs()
                     .stream()
                     .map(ClientManagerAPI::getUserUUID)
                     .collect(Collectors.toList());
-            if (!packet.getAssignWorld().equals("null")) {
-                uuids.forEach(uuid -> KirraCoreBukkit.getInstance().getProfileManager().getASSIGN_WORLD().put(uuid, packet.getAssignCoord()));
+            if (packet.getAssignType() == AssignType.ASSIGN_WORLD) {
+                uuids.forEach(uuid -> KirraCoreBukkit.getInstance().getProfileManager().getASSIGN_WORLD().put(uuid, packet.getAssignValue()));
             }
-            if (!packet.getAssignCoord().equals("null")) {
-                uuids.forEach(uuid -> KirraCoreBukkit.getInstance().getProfileManager().getASSIGN_COORD().put(uuid, packet.getAssignCoord()));
+            if (packet.getAssignType() == AssignType.ASSIGN_COORD) {
+                uuids.forEach(uuid -> KirraCoreBukkit.getInstance().getProfileManager().getASSIGN_COORD().put(uuid, packet.getAssignValue()));
             }
         }
     }
