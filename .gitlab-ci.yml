@@ -27,7 +27,8 @@ deploy:
     - mvn clean deploy -DskipTests # 有API接口的情况下，部署到maven仓库。
     - mkdir -p $TARGET_DIR # 先移动到构建完成用于存储的文件夹
     - rm -rf $TARGET_DIR/*
-    - cp -vrf ./*/target/*.jar $TARGET_DIR/
+    - cp -vrf platform/platform-bukkit/target/*.jar $TARGET_DIR/
+    - cp -vrf platform/platform-bungee/target/*.jar $TARGET_DIR/
     - rm -vrf $TARGET_DIR/*-API* # 移除API文件
     - rm -vrf $TARGET_DIR/original* # 移除非必须文件
   only:
