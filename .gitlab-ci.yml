@@ -34,5 +34,5 @@ deploy:
     - master # 只有在主分支提交时执行
   artifacts:
     paths:
-      - platform/platform-bukkit/target/*.jar
-      - platform/platform-bungee/target/*.jar
+      - KirraCore-Bungee/target/*.jar
+      - KirraCore-Bukkit/target/*.jar
