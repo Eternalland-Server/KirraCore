@@ -10,5 +10,7 @@ depend:
   - PlaceholderAPI
   - GemsEconomy
   - DataManager-Bukkit
-  - MythicMobs
+
+softdepend:
   - Skript
+  - MythicMobs
