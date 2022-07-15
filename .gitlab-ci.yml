@@ -15,7 +15,8 @@ build:
     - main
   artifacts:
     paths:
-      - asset/*.jar
+      - platform/platform-bukkit/target/*.jar
+      - platform/platform-bungee/target/*.jar
 
 deploy:
   # 部署到 正式服文件夹
@@ -26,9 +27,12 @@ deploy:
     - mvn clean deploy -DskipTests # 有API接口的情况下，部署到maven仓库。
     - mkdir -p $TARGET_DIR # 先移动到构建完成用于存储的文件夹
     - rm -rf $TARGET_DIR/*
-    - cp -vrf ./asset/*.jar $TARGET_DIR/
+    - cp -vrf ./*/target/*.jar $TARGET_DIR/
+    - rm -vrf $TARGET_DIR/*-API* # 移除API文件
+    - rm -vrf $TARGET_DIR/original* # 移除非必须文件
   only:
     - main # 只有在主分支提交时执行
   artifacts:
     paths:
-      - asset/*.jar
+      - platform/platform-bukkit/target/*.jar
+      - platform/platform-bungee/target/*.jar
