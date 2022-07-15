@@ -1,0 +1,8 @@
+name: KirraCoreBungee
+main: net.sakuragame.eternal.kirracore.bungee.KirraCoreBungee
+version: ${project.version}
+
+author: "闲蛋"
+
+depends:
+  - DataManager-Bungee
