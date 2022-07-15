@@ -31,8 +31,8 @@ deploy:
     - rm -vrf $TARGET_DIR/*-API* # 移除API文件
     - rm -vrf $TARGET_DIR/original* # 移除非必须文件
   only:
-    - master # 只有在主分支提交时执行
+    - main # 只有在主分支提交时执行
   artifacts:
     paths:
-      - KirraCore-Bungee/target/*.jar
-      - KirraCore-Bukkit/target/*.jar
+      - platform/platform-bukkit/target/*.jar
+      - platform/platform-bungee/target/*.jar
