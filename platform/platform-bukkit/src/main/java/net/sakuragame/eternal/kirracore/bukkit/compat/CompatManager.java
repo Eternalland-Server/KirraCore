@@ -35,7 +35,9 @@ public class CompatManager {
                 }
                 instance.getLogger().info("跟 " + newInstance.getPlugin() + " 进行挂钩.");
                 newInstance.init();
-            } catch (Exception ignored) {
+            } catch (Exception exception) {
+                instance.getLogger().info("注册兼容性控件时出现了一个错误: ");
+                exception.printStackTrace();
             }
         });
     }
