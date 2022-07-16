@@ -14,7 +14,7 @@ import org.bukkit.event.Listener;
 @KListener
 public class ListenerProtocol implements Listener {
 
-    static {
+    public ListenerProtocol() {
         PacketAdapter packetAdapter = new PacketAdapter(PacketAdapter
                 .params()
                 .plugin(KirraCoreBukkit.getInstance())
