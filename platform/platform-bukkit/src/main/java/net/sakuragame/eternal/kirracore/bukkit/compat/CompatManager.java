@@ -8,6 +8,7 @@ import lombok.val;
 import net.sakuragame.eternal.kirracore.bukkit.KirraCoreBukkit;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.reflections.Reflections;
 
 public class CompatManager {
 
@@ -26,9 +27,9 @@ public class CompatManager {
     }
 
     private void initCompat() {
-        val subType = instance.getRef().getSubTypesOf(CompatHandler.class);
+        val ref = new Reflections("net.sakuragame.eternal.kirracore.bukkit");
+        val subType = ref.getSubTypesOf(CompatHandler.class);
         subType.forEach(clazz -> {
-            System.out.println("clazz: " + clazz.getName());
             try {
                 val newInstance = clazz.newInstance();
                 if (Bukkit.getPluginManager().getPlugin(newInstance.getPlugin()) == null) {
