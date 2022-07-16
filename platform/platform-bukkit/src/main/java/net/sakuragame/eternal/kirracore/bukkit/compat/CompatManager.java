@@ -28,7 +28,7 @@ public class CompatManager {
     private void initCompat() {
         KirraCoreBukkit.getInstance().getClazzs().forEach(clazz -> {
             try {
-                if (!clazz.isAssignableFrom(CompatHandler.class)) {
+                if (!clazz.isAssignableFrom(CompatHandler.class) && clazz != CompatHandler.class) {
                     return;
                 }
                 val newInstance = (CompatHandler) clazz.newInstance();
