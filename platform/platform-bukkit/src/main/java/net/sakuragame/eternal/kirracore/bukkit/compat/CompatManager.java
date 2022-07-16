@@ -27,7 +27,7 @@ public class CompatManager {
     }
 
     private void initCompat() {
-        val ref = new Reflections("net.sakuragame.eternal.kirracore.bukkit");
+        val ref = new Reflections("net.sakuragame.eternal.kirracore.bukkit.compat");
         val subType = ref.getSubTypesOf(CompatHandler.class);
         subType.forEach(clazz -> {
             try {
