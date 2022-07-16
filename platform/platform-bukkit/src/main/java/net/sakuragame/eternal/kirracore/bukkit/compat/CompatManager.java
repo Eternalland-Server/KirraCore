@@ -28,6 +28,7 @@ public class CompatManager {
     private void initCompat() {
         val subType = instance.getRef().getSubTypesOf(CompatHandler.class);
         subType.forEach(clazz -> {
+            System.out.println("clazz: " + clazz.getName());
             try {
                 val newInstance = clazz.newInstance();
                 if (Bukkit.getPluginManager().getPlugin(newInstance.getPlugin()) == null) {
