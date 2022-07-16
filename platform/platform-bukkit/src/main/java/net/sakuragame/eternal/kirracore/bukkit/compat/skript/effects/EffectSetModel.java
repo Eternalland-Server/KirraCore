@@ -6,7 +6,7 @@ import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
 import com.eatthepath.uuid.FastUUID;
 import net.sakuragame.eternal.dragoncore.api.CoreAPI;
-import net.sakuragame.eternal.kirracore.common.util.ClassUtil;
+import net.sakuragame.eternal.kirracore.common.util.TypeUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Event;
@@ -43,7 +43,7 @@ public class EffectSetModel extends Effect {
         }
         String str = this.entityUUID.getSingle(event);
         UUID entityUUID = FastUUID.parseUUID(Objects.requireNonNull(str));
-        LivingEntity entity = ClassUtil.safeCast(Bukkit.getEntity(entityUUID), LivingEntity.class);
+        LivingEntity entity = TypeUtil.safeCast(Bukkit.getEntity(entityUUID), LivingEntity.class);
         if (entity == null) {
             return;
         }

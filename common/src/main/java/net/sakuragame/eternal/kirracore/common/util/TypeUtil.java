@@ -1,7 +1,7 @@
 package net.sakuragame.eternal.kirracore.common.util;
 
 @SuppressWarnings("unchecked")
-public class ClassUtil {
+public class TypeUtil {
 
     public static <T> T safeCast(Object obj, Class<T> type) {
         if (obj == null) {

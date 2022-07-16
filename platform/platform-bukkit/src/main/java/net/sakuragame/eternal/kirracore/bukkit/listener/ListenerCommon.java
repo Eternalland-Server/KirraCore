@@ -9,7 +9,7 @@ import net.sakuragame.eternal.kirracore.bukkit.KirraCoreBukkit;
 import net.sakuragame.eternal.kirracore.bukkit.util.Utils;
 import net.sakuragame.eternal.kirracore.common.annotation.KListener;
 import net.sakuragame.eternal.kirracore.common.util.CC;
-import net.sakuragame.eternal.kirracore.common.util.ClassUtil;
+import net.sakuragame.eternal.kirracore.common.util.TypeUtil;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,8 +24,8 @@ public class ListenerCommon implements Listener {
 
     @EventHandler
     public void onDamage(EntityDamageByEntityEvent event) {
-        val entity = ClassUtil.safeCast(event.getEntity(), Player.class);
-        val attacker = ClassUtil.safeCast(event.getEntity(), Player.class);
+        val entity = TypeUtil.safeCast(event.getEntity(), Player.class);
+        val attacker = TypeUtil.safeCast(event.getEntity(), Player.class);
         if (entity == null || attacker == null) {
             return;
         }

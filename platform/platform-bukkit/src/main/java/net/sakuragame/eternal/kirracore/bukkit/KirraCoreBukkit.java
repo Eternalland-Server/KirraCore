@@ -7,11 +7,13 @@ import lombok.val;
 import net.sakuragame.eternal.kirracore.bukkit.compat.CompatManager;
 import net.sakuragame.eternal.kirracore.bukkit.profile.ProfileManager;
 import net.sakuragame.eternal.kirracore.bukkit.storage.Database;
+import net.sakuragame.eternal.kirracore.bukkit.util.ClassUtil;
 import net.sakuragame.eternal.kirracore.common.annotation.KListener;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.reflections.Reflections;
+
+import java.util.Collection;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class KirraCoreBukkit extends JavaPlugin {
@@ -35,13 +37,13 @@ public class KirraCoreBukkit extends JavaPlugin {
     private Database database;
 
     @Getter
-    private Reflections ref;
+    private Collection<Class<?>> clazzs;
 
     @Override
     public void onEnable() {
         instance = this;
 
-        ref = new Reflections("net.sakuragame.eternal.kirracore.bukkit");
+        clazzs = ClassUtil.getClassesInPackage(this, "net.sakuragame.eternal.kirracore.bukkit");
 
         saveDefaultConfig();
         reloadConfig();
@@ -58,9 +60,11 @@ public class KirraCoreBukkit extends JavaPlugin {
     }
 
     private void initCommands() {
-        val annotated = ref.getTypesAnnotatedWith(CommandMeta.class);
-        annotated.forEach(clazz -> {
+        clazzs.forEach(clazz -> {
             try {
+                if (clazz.getAnnotation(CommandMeta.class) == null) {
+                    return;
+                }
                 honcho.registerCommand(clazz);
             } catch (Exception ignored) {
             }
@@ -68,8 +72,10 @@ public class KirraCoreBukkit extends JavaPlugin {
     }
 
     private void initListeners() {
-        val annotated = ref.getTypesAnnotatedWith(KListener.class);
-        annotated.forEach(clazz -> {
+        clazzs.forEach(clazz -> {
+            if (clazz.getAnnotation(KListener.class) == null) {
+                return;
+            }
             if (Listener.class.isAssignableFrom(clazz)) {
                 try {
                     val listener = (Listener) clazz.newInstance();

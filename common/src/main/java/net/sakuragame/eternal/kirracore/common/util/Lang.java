@@ -27,7 +27,7 @@ public class Lang {
                 sender.sendMessage(coloredStr);
                 break;
             case ACTION_BAR:
-                Player player = ClassUtil.safeCast(sender, Player.class);
+                Player player = TypeUtil.safeCast(sender, Player.class);
                 if (player == null) {
                     return;
                 }
