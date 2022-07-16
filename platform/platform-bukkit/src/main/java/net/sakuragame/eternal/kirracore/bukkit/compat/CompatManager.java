@@ -28,8 +28,7 @@ public class CompatManager {
     private void initCompat() {
         KirraCoreBukkit.getInstance().getClazzs().forEach(clazz -> {
             try {
-                System.out.println(clazz.getSimpleName());
-                if (!clazz.isAssignableFrom(CompatHandler.class) || clazz.isInterface()) {
+                if (!CompatHandler.class.isAssignableFrom(clazz) || clazz.isInterface()) {
                     return;
                 }
                 System.out.println("reached 1");
