@@ -31,13 +31,10 @@ public class CompatManager {
                 if (!CompatHandler.class.isAssignableFrom(clazz) || clazz.isInterface()) {
                     return;
                 }
-                System.out.println("reached 1");
                 val newInstance = (CompatHandler) clazz.newInstance();
-                System.out.println("reached 2");
                 if (Bukkit.getPluginManager().getPlugin(newInstance.getPlugin()) == null) {
                     return;
                 }
-                System.out.println("reached 3");
                 instance.getLogger().info("跟 " + newInstance.getPlugin() + " 进行挂钩.");
                 newInstance.init();
             } catch (Exception exception) {
