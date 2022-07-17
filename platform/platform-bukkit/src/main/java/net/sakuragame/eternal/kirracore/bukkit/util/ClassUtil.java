@@ -4,7 +4,9 @@ import com.google.common.collect.ImmutableSet;
 import org.bukkit.plugin.Plugin;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,7 +22,13 @@ public class ClassUtil {
         CodeSource codeSource = plugin.getClass().getProtectionDomain().getCodeSource();
         URL resource = codeSource.getLocation();
         String relPath = packageName.replace('.', '/');
-        String resPath = resource.getPath().replace("%20", " ");
+//        String resPath = resource.getPath().replace("%20", " ");
+        String resPath;
+        try {
+            resPath = URLDecoder.decode(resource.getPath(), " ");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
         String jarPath = resPath.replaceFirst("[.]jar!.*", ".jar").replaceFirst("file:", "");
         JarFile jarFile;
 
