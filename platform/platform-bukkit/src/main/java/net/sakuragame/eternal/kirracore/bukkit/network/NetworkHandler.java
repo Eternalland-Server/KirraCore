@@ -35,6 +35,7 @@ public class NetworkHandler {
         val str = serialized.toString();
         if (async) {
             ClientManagerAPI.getRedisManager().publishAsync("KirraCore", "main", str);
+            System.out.println("sent");
             return;
         }
         ClientManagerAPI.getRedisManager().publish("KirraCore", "main", str);

@@ -68,6 +68,7 @@ public class KirraCoreBukkitAPI {
     public static CompletableFuture<TResult> teleportPlayerToServerByBalancing(@NotNull String serverPrefix,
                                                                                @NotNull UUID... uuids
     ) {
+        System.out.println("reached balance");
         val future = new CompletableFuture<TResult>();
         FunctionPacket.sendC2BPacket(serverPrefix, uuids, null, null, SwitchType.DIRECT);
         FunctionPacket.handleC2BFuture(uuids, future);
