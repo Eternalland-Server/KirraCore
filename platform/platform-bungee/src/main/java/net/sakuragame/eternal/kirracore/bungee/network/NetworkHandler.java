@@ -10,6 +10,7 @@ import net.sakuragame.eternal.kirracore.common.packet.MatchType;
 import net.sakuragame.eternal.kirracore.common.packet.PacketListenerData;
 import net.sakuragame.eternal.kirracore.common.packet.PacketMatcher;
 import net.sakuragame.eternal.kirracore.common.packet.function.FunctionPacketRegister;
+import net.sakuragame.eternal.kirracore.common.packet.impl.c2b.C2BPacketPlayerSwitchServer;
 import net.sakuragame.serversystems.manage.api.redis.RedisMessageListener;
 import net.sakuragame.serversystems.manage.proxy.api.ProxyManagerAPI;
 
@@ -61,6 +62,9 @@ public class NetworkHandler {
                     return;
                 }
                 packet.deserialized(jsonObj);
+                if (packet instanceof C2BPacketPlayerSwitchServer) {
+                    System.out.println("reached switch");
+                }
                 PACKET_LISTENERS.forEach(listener -> {
                     if (listener.matches(packet)) {
                         try {
