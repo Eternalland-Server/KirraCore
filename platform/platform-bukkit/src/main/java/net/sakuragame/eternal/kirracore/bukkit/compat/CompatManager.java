@@ -31,12 +31,12 @@ public class CompatManager {
                 if (!CompatHandler.class.isAssignableFrom(clazz) || clazz.isInterface()) {
                     return;
                 }
-                val newInstance = (CompatHandler) clazz.newInstance();
-                if (Bukkit.getPluginManager().getPlugin(newInstance.getPlugin()) == null) {
+                val clazzInstance = (CompatHandler) clazz.newInstance();
+                if (!Bukkit.getPluginManager().isPluginEnabled(clazzInstance.getPlugin())) {
                     return;
                 }
-                instance.getLogger().info("跟 " + newInstance.getPlugin() + " 进行挂钩.");
-                newInstance.init();
+                this.instance.getLogger().info("跟 " + clazzInstance.getPlugin() + " 进行挂钩.");
+                clazzInstance.init();
             } catch (Exception exception) {
                 instance.getLogger().info("注册兼容性控件时出现了一个错误: ");
                 exception.printStackTrace();
