@@ -50,7 +50,7 @@ public class KirraCoreBukkitAPI {
     public static CompletableFuture<TResult> teleportPlayerToAnotherServer(@NotNull String serverID,
                                                                            @Nullable AssignType assignType,
                                                                            @Nullable String assignValue,
-                                                                           @NotNull UUID[] uuids
+                                                                           @NotNull UUID... uuids
     ) {
         val future = new CompletableFuture<TResult>();
         FunctionPacket.sendC2BPacket(serverID, uuids, assignType, assignValue, SwitchType.DIRECT);
