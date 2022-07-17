@@ -39,6 +39,7 @@ public class ServerManager {
         if (server == null) {
             return;
         }
+        servers.remove(serverID);
         KirraCoreBungee.getInstance().getProxy().getPluginManager().callEvent(new ServerOfflineEvent(serverID));
     }
 

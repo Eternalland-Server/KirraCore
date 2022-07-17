@@ -16,7 +16,6 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-@SuppressWarnings("SpellCheckingInspection")
 public class FunctionPacket {
 
     public static void sendTeleportFailedPacket(@NotNull C2BPacketPlayerSwitchServer c2bPacket) {
