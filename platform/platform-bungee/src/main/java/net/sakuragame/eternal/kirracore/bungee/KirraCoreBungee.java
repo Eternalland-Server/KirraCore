@@ -29,9 +29,9 @@ public class KirraCoreBungee extends Plugin {
 
         ref = new Reflections("net.sakuragame.eternal.kirracore.bungee");
 
-        NetworkHandler.init();
-
         initListeners();
+        
+        NetworkHandler.init();
     }
 
     private void initListeners() {

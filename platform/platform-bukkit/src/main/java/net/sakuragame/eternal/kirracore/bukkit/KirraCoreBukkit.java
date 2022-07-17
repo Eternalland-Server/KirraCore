@@ -5,6 +5,7 @@ import com.qrakn.honcho.command.CommandMeta;
 import lombok.Getter;
 import lombok.val;
 import net.sakuragame.eternal.kirracore.bukkit.compat.CompatManager;
+import net.sakuragame.eternal.kirracore.bukkit.network.NetworkHandler;
 import net.sakuragame.eternal.kirracore.bukkit.profile.ProfileManager;
 import net.sakuragame.eternal.kirracore.bukkit.storage.Database;
 import net.sakuragame.eternal.kirracore.bukkit.util.ClassUtil;
@@ -57,6 +58,8 @@ public class KirraCoreBukkit extends JavaPlugin {
 
         initListeners();
         initCommands();
+
+        NetworkHandler.init();
     }
 
     private void initCommands() {
