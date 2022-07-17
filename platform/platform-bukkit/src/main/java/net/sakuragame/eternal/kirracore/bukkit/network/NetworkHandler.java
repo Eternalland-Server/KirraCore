@@ -2,12 +2,14 @@ package net.sakuragame.eternal.kirracore.bukkit.network;
 
 import lombok.val;
 import net.sakuragame.eternal.kirracore.bukkit.network.heartbeat.HeartBeatRunnable;
+import net.sakuragame.eternal.kirracore.bukkit.network.listener.ListenerPacket;
 import net.sakuragame.eternal.kirracore.bukkit.util.Scheduler;
 import net.sakuragame.eternal.kirracore.common.KirraCoreCommon;
 import net.sakuragame.eternal.kirracore.common.packet.IPacket;
 import net.sakuragame.eternal.kirracore.common.packet.MatchType;
 import net.sakuragame.eternal.kirracore.common.packet.PacketListenerData;
 import net.sakuragame.eternal.kirracore.common.packet.PacketMatcher;
+import net.sakuragame.eternal.kirracore.common.packet.function.FunctionPacketRegister;
 import net.sakuragame.serversystems.manage.api.redis.RedisMessageListener;
 import net.sakuragame.serversystems.manage.client.api.ClientManagerAPI;
 
@@ -22,6 +24,8 @@ public class NetworkHandler {
     public static void init() {
         ClientManagerAPI.getRedisManager().subscribe("KirraCore");
         ClientManagerAPI.getRedisManager().registerListener(new PacketListener());
+
+        FunctionPacketRegister.registerListener(new ListenerPacket(), PACKET_LISTENERS);
 
         HeartBeatRunnable.run();
     }

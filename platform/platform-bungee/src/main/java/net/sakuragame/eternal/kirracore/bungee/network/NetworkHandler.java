@@ -3,11 +3,13 @@ package net.sakuragame.eternal.kirracore.bungee.network;
 import lombok.val;
 import net.sakuragame.eternal.kirracore.bungee.KirraCoreBungee;
 import net.sakuragame.eternal.kirracore.bungee.network.heartbeat.HeartBeatRunnable;
+import net.sakuragame.eternal.kirracore.bungee.network.listener.ListenerPacket;
 import net.sakuragame.eternal.kirracore.common.KirraCoreCommon;
 import net.sakuragame.eternal.kirracore.common.packet.IPacket;
 import net.sakuragame.eternal.kirracore.common.packet.MatchType;
 import net.sakuragame.eternal.kirracore.common.packet.PacketListenerData;
 import net.sakuragame.eternal.kirracore.common.packet.PacketMatcher;
+import net.sakuragame.eternal.kirracore.common.packet.function.FunctionPacketRegister;
 import net.sakuragame.serversystems.manage.api.redis.RedisMessageListener;
 import net.sakuragame.serversystems.manage.proxy.api.ProxyManagerAPI;
 
@@ -22,6 +24,8 @@ public class NetworkHandler {
     public static void init() {
         ProxyManagerAPI.getRedisManager().subscribe("KirraCore");
         ProxyManagerAPI.getRedisManager().registerListener(new PacketListener());
+
+        FunctionPacketRegister.registerListener(new ListenerPacket(), PACKET_LISTENERS);
 
         HeartBeatRunnable.run();
     }

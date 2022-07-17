@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 @SuppressWarnings("rawtypes")
-public class FunctionPacket {
+public class FunctionPacketRegister {
 
     public static void registerListener(Object clazz, List<PacketListenerData> listeners) {
         for (Method method : clazz.getClass().getDeclaredMethods()) {
