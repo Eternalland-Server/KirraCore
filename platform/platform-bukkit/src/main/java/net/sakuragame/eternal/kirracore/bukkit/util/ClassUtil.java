@@ -42,8 +42,7 @@ public class ClassUtil {
                 className = entryName.replace('/', '.').replace('\\', '.').replace(".class", "");
             }
 
-            if (className != null) {
-                System.out.println("className: " + className);
+            if (className != null && !className.contains("compat")) {
                 Class<?> clazz = null;
 
                 try {

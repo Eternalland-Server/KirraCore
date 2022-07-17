@@ -4,12 +4,20 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import lombok.Getter;
-import lombok.val;
 import net.sakuragame.eternal.kirracore.bukkit.KirraCoreBukkit;
+import net.sakuragame.eternal.kirracore.bukkit.compat.mythicmobs.CompatMythicMobsHandler;
+import net.sakuragame.eternal.kirracore.bukkit.compat.skript.CompatSkriptHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
+
 public class CompatManager {
+
+    protected final ArrayList<CompatHandler> HANDLERS = new ArrayList<CompatHandler>() {{
+        add(new CompatMythicMobsHandler());
+        add(new CompatSkriptHandler());
+    }};
 
     @Getter
     private final KirraCoreBukkit instance;
@@ -26,21 +34,12 @@ public class CompatManager {
     }
 
     private void initCompat() {
-        KirraCoreBukkit.getInstance().getClazzs().forEach(clazz -> {
-            try {
-                if (!CompatHandler.class.isAssignableFrom(clazz) || clazz.isInterface()) {
-                    return;
-                }
-                val clazzInstance = (CompatHandler) clazz.newInstance();
-                if (!Bukkit.getPluginManager().isPluginEnabled(clazzInstance.getPlugin())) {
-                    return;
-                }
-                this.instance.getLogger().info("跟 " + clazzInstance.getPlugin() + " 进行挂钩.");
-                clazzInstance.init();
-            } catch (Exception exception) {
-                instance.getLogger().info("注册兼容性控件时出现了一个错误: ");
-                exception.printStackTrace();
+        HANDLERS.forEach(handler -> {
+            if (!Bukkit.getPluginManager().isPluginEnabled(handler.getPlugin())) {
+                return;
             }
+            this.instance.getLogger().info("跟 " + handler.getPlugin() + " 进行挂钩.");
+            handler.init();
         });
     }
 }
