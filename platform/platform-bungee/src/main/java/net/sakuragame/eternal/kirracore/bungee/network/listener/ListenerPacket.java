@@ -19,6 +19,8 @@ public class ListenerPacket {
 
     @KComingPacketHandler
     public void onPlayerSwitchServer(C2BPacketPlayerSwitchServer packet) {
+        System.out.println("reached switch");
+        System.out.println(packet.getPlayerIDs());
         ServerInfo server;
         val type = packet.getSwitchType();
         if (type == SwitchType.DIRECT) {
