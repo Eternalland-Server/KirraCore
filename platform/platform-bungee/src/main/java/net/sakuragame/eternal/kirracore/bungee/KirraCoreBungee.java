@@ -6,8 +6,10 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.sakuragame.eternal.kirracore.bungee.manager.ServerManager;
 import net.sakuragame.eternal.kirracore.bungee.network.NetworkHandler;
+import net.sakuragame.eternal.kirracore.bungee.util.ClassUtil;
 import net.sakuragame.eternal.kirracore.common.annotation.KListener;
-import org.reflections.Reflections;
+
+import java.util.Collection;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class KirraCoreBungee extends Plugin {
@@ -19,7 +21,7 @@ public class KirraCoreBungee extends Plugin {
     private ServerManager serverManager;
 
     @Getter
-    private Reflections ref;
+    private Collection<Class<?>> clazzs;
 
     @Override
     public void onEnable() {
@@ -27,16 +29,19 @@ public class KirraCoreBungee extends Plugin {
 
         serverManager = new ServerManager(this);
 
-        ref = new Reflections("net.sakuragame.eternal.kirracore.bungee");
+        clazzs = ClassUtil.getClassesInPackage(this, "net.sakuragame.eternal.kirracore.bungee");
+
 
         initListeners();
-        
+
         NetworkHandler.init();
     }
 
     private void initListeners() {
-        val annotated = ref.getTypesAnnotatedWith(KListener.class);
-        annotated.forEach(clazz -> {
+        clazzs.forEach(clazz -> {
+            if (clazz.getAnnotation(KListener.class) == null) {
+                return;
+            }
             if (Listener.class.isAssignableFrom(clazz)) {
                 try {
                     val listener = (Listener) clazz.newInstance();

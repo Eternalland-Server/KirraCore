@@ -2,31 +2,28 @@ package net.sakuragame.eternal.kirracore.common.packet;
 
 import com.google.gson.JsonObject;
 import lombok.val;
-import net.sakuragame.eternal.kirracore.common.KirraCoreCommon;
+import net.sakuragame.eternal.kirracore.common.packet.impl.a2c.A2CPacketServerShutdown;
+import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.B2CPacketPlayerSwitchServer;
+import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.B2CPacketPlayerSwitchServerFailed;
+import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.B2CPacketStaffJoinOrQuit;
+import net.sakuragame.eternal.kirracore.common.packet.impl.c2b.C2BPacketHeartBeat;
+import net.sakuragame.eternal.kirracore.common.packet.impl.c2b.C2BPacketPlayerSwitchServer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-@SuppressWarnings("SpellCheckingInspection")
 public class PacketMatcher {
 
-    static final ArrayList<IPacket> PACKETS = new ArrayList<>();
-
-    static {
-        val subTypes = KirraCoreCommon.getREF().getSubTypesOf(IPacket.class);
-        subTypes.forEach(clazz -> {
-            try {
-                val packet = clazz.newInstance();
-                PACKETS.add(packet);
-            } catch (Exception exception) {
-                System.out.println("[KirraCoreCommon] Failed to initialization.");
-                exception.printStackTrace();
-            }
-        });
-    }
+    static final ArrayList<IPacket> PACKETS = new ArrayList<IPacket>() {{
+        add(new A2CPacketServerShutdown());
+        add(new B2CPacketPlayerSwitchServer());
+        add(new B2CPacketPlayerSwitchServerFailed());
+        add(new B2CPacketStaffJoinOrQuit());
+        add(new C2BPacketHeartBeat());
+        add(new C2BPacketPlayerSwitchServer());
+    }};
 
     @Nullable
     public static IPacket match(@NotNull JsonObject jsonObj, @NotNull List<MatchType> types) {

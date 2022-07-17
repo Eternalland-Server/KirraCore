@@ -1,7 +1,7 @@
-package net.sakuragame.eternal.kirracore.bukkit.util;
+package net.sakuragame.eternal.kirracore.bungee.util;
 
 import com.google.common.collect.ImmutableSet;
-import org.bukkit.plugin.Plugin;
+import net.md_5.bungee.api.plugin.Plugin;
 
 import java.io.IOException;
 import java.net.URL;
