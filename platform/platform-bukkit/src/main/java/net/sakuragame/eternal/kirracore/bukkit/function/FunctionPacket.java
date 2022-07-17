@@ -28,7 +28,6 @@ public class FunctionPacket {
             @Nullable String assignValue,
             @NotNull SwitchType switchType
     ) {
-        System.out.println("reached send start");
         val packet = new C2BPacketPlayerSwitchServer();
         packet.setPlayerIDs(
                 Arrays.stream(uuids)
@@ -41,7 +40,6 @@ public class FunctionPacket {
         packet.setAssignType(assignType == null ? AssignType.NONE : assignType);
         packet.setAssignValue(assignValue == null ? "null" : assignValue);
         packet.setSwitchType(switchType);
-        System.out.println("reached send end");
         NetworkHandler.sendPacket(packet, true);
     }
 
