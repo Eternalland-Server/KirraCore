@@ -1,0 +1,3 @@
+settings:
+  teleport-when-join: true
+  allowed-pvp: false

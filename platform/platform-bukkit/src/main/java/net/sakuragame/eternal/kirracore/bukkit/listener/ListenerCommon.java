@@ -16,11 +16,23 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 @SuppressWarnings("ConstantConditions")
 @KListener
 public class ListenerCommon implements Listener {
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent e) {
+        val player = e.getPlayer();
+        player.sendTitle("", "", 0, 1, 0);
+        player.resetTitle();
+        if (KirraCoreBukkit.getInstance().getConfig().getBoolean("settings.teleport-when-join")) {
+            val loc = KirraCoreBukkit.getInstance().getCompatManager().getMultiverseCore().getMVWorldManager().getMVWorld("world").getSpawnLocation();
+            player.teleport(loc);
+        }
+    }
 
     @EventHandler
     public void onDamage(EntityDamageByEntityEvent event) {
