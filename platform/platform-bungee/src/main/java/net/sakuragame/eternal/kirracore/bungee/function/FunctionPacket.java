@@ -54,7 +54,7 @@ public class FunctionPacket {
                         });
                     }
             );
-        }, 1, TimeUnit.SECONDS);
+        }, 2, TimeUnit.SECONDS);
     }
 
     public static void sendStaffSwitchServerPacket(
