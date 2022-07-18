@@ -9,7 +9,7 @@ import net.sakuragame.eternal.kirracore.common.packet.MatchType;
 
 @Data
 @NoArgsConstructor
-public class B2CPacketStaffJoinOrQuit implements IPacket {
+public class B2CPacketStaffSwitchServer implements IPacket {
 
     private String staffName;
     private String joinOrQuitServerID;

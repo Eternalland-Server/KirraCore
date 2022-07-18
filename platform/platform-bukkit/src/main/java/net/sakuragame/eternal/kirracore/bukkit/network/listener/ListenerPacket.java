@@ -12,7 +12,7 @@ import net.sakuragame.eternal.kirracore.common.annotation.KComingPacketHandler;
 import net.sakuragame.eternal.kirracore.common.packet.impl.a2c.A2CPacketServerShutdown;
 import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.B2CPacketPlayerSwitchServer;
 import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.B2CPacketPlayerSwitchServerFailed;
-import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.B2CPacketStaffJoinOrQuit;
+import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.B2CPacketStaffSwitchServer;
 import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.sub.TResult;
 import net.sakuragame.eternal.kirracore.common.packet.impl.sub.AssignType;
 import net.sakuragame.eternal.kirracore.common.util.CC;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class ListenerPacket {
 
     @KComingPacketHandler
-    public void onStaffJoinOrQuit(B2CPacketStaffJoinOrQuit packet) {
+    public void onStaffJoinOrQuit(B2CPacketStaffSwitchServer packet) {
         var message = "";
         if (packet.isJoin()) {
             message = "&c[System] &7管理员 " + packet.getStaffName() + " 进入了 " + packet.getJoinOrQuitServerID() + " 服务器.";

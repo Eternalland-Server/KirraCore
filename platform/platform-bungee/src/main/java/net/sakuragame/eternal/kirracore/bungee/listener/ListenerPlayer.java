@@ -15,7 +15,7 @@ public class ListenerPlayer implements Listener {
     public void onStaffJoin(ServerConnectedEvent event) {
         val player = event.getPlayer();
         if (player.hasPermission("admin")) {
-            FunctionPacket.sendStaffJoinOrQuitPacket(player.getName(), event.getServer().getInfo().getName(), true);
+            FunctionPacket.sendStaffSwitchServerPacket(player.getName(), event.getServer().getInfo().getName(), true);
         }
     }
 
@@ -23,7 +23,7 @@ public class ListenerPlayer implements Listener {
     public void onStaffLeft(ServerDisconnectEvent event) {
         val player = event.getPlayer();
         if (player.hasPermission("admin")) {
-            FunctionPacket.sendStaffJoinOrQuitPacket(player.getName(), event.getTarget().getName(),false);
+            FunctionPacket.sendStaffSwitchServerPacket(player.getName(), event.getTarget().getName(),false);
         }
     }
 }

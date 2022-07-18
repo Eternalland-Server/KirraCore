@@ -6,7 +6,7 @@ import net.sakuragame.eternal.kirracore.bungee.KirraCoreBungee;
 import net.sakuragame.eternal.kirracore.bungee.network.NetworkHandler;
 import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.B2CPacketPlayerSwitchServer;
 import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.B2CPacketPlayerSwitchServerFailed;
-import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.B2CPacketStaffJoinOrQuit;
+import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.B2CPacketStaffSwitchServer;
 import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.sub.FailedReason;
 import net.sakuragame.eternal.kirracore.common.packet.impl.c2b.C2BPacketPlayerSwitchServer;
 import net.sakuragame.serversystems.manage.proxy.api.ProxyManagerAPI;
@@ -46,12 +46,12 @@ public class FunctionPacket {
         }, 1, TimeUnit.SECONDS);
     }
 
-    public static void sendStaffJoinOrQuitPacket(
+    public static void sendStaffSwitchServerPacket(
             @NotNull String staffName,
             @NotNull String serverID,
             boolean isJoin
     ) {
-        val packet = new B2CPacketStaffJoinOrQuit();
+        val packet = new B2CPacketStaffSwitchServer();
         packet.setStaffName(staffName);
         packet.setJoinOrQuitServerID(serverID);
         packet.setJoin(isJoin);
