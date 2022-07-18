@@ -29,8 +29,7 @@ public class PacketMatcher {
     public static IPacket match(@NotNull JsonObject jsonObj, @NotNull List<MatchType> types) {
         val id = jsonObj.get("packetID").getAsInt();
         val fPacket = PACKETS.stream()
-                .filter(p -> p.id() == id)
-                .filter(p -> types.contains(p.type()))
+                .filter(p -> p.id() == id && types.contains(p.type()))
                 .findFirst()
                 .orElse(null);
         if (fPacket == null) {
@@ -40,7 +39,9 @@ public class PacketMatcher {
             val packet = fPacket.getClass().newInstance();
             packet.deserialized(jsonObj);
             return packet;
-        } catch (Exception ignored) {
+        } catch (Exception exception) {
+            System.out.println("[PacketMatcher] Failed to deserialize packet");
+            exception.printStackTrace();
         }
         return null;
     }
