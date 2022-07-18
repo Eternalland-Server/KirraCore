@@ -67,7 +67,9 @@ public class ListenerPacket {
 
     @KComingPacketHandler
     public void onTeleportFailed(B2CPacketPlayerSwitchServerFailed packet) {
+        System.out.println(packet);
         if (packet.getServerFrom().equals(Utils.getCURRENT_SERVER_NAME())) {
+            System.out.println("reached 1");
             packet.getPlayerIDs()
                     .stream()
                     .map(uid -> Bukkit.getPlayer(ClientManagerAPI.getUserUUID(uid)))
