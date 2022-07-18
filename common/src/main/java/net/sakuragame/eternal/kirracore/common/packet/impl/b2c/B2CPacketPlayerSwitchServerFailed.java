@@ -48,6 +48,6 @@ public class B2CPacketPlayerSwitchServerFailed implements IPacket {
         this.playerIDs = KirraCoreCommon.getGSON().fromJson(jsonObj.get("playerIDs").getAsString(), TypeToken.INT_LIST_TYPE);
         this.serverFrom = jsonObj.get("serverFrom").getAsString();
         this.serverTo = jsonObj.get("serverTo").getAsString();
-        this.reason = FailedReason.match(jsonObj.get("type").getAsInt());
+        this.reason = FailedReason.match(jsonObj.get("reason").getAsInt());
     }
 }
