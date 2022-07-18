@@ -38,6 +38,7 @@ public class ListenerPacket {
 
     @KComingPacketHandler
     public void onTeleport(B2CPacketPlayerSwitchServer packet) {
+        Bukkit.broadcastMessage("reached switch");
         if (packet.getServerFrom().equals(Utils.getCURRENT_SERVER_NAME())) {
             packet.getPlayerIDs()
                     .stream()
@@ -48,6 +49,7 @@ public class ListenerPacket {
                             return;
                         }
                         future.complete(TResult.SUCCESS);
+                        Bukkit.broadcastMessage("succ");
                         KirraCoreBukkitAPI.getTELEPORTING_MAP().remove(player.getUniqueId());
                     });
             return;
@@ -77,10 +79,6 @@ public class ListenerPacket {
                     .filter(Objects::nonNull).forEach(player -> {
                         Bukkit.broadcastMessage("reached 1");
                         Bukkit.broadcastMessage(KirraCoreBukkitAPI.getTELEPORTING_MAP().toString());
-                        Scheduler.run(() -> {
-                            Bukkit.broadcastMessage("run in sync");
-                            Bukkit.broadcastMessage(KirraCoreBukkitAPI.getTELEPORTING_MAP().toString());
-                        });
                         val future = KirraCoreBukkitAPI.getTELEPORTING_MAP().get(player.getUniqueId());
                         Bukkit.broadcastMessage("reached 2");
                         if (future == null) {
