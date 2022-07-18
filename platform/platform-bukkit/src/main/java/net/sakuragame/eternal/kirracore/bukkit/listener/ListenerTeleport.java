@@ -7,6 +7,7 @@ import net.sakuragame.eternal.kirracore.bukkit.util.taskchain.TaskChain;
 import net.sakuragame.eternal.kirracore.common.annotation.KListener;
 import net.sakuragame.eternal.kirracore.common.util.CC;
 import net.sakuragame.eternal.kirracore.common.util.Lang;
+import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,6 +17,7 @@ public class ListenerTeleport implements Listener {
 
     @EventHandler
     public void onTeleportFailed(TeleportServerFailedEvent event) {
+        Bukkit.broadcastMessage("reached failed");
         val player = event.getPlayer();
         new TaskChain()
                 .delayedTask(() -> KirraCoreBukkitAPI.cancelLoadingAnimation(player), 5, true)
@@ -26,5 +28,6 @@ public class ListenerTeleport implements Listener {
                     Lang.sendMessage(player, Lang.WARN_MSG_PREFIX, "传送失败, 请稍后再试.", Lang.BukkitMessageType.ACTION_BAR);
                 })
                 .execute();
+        Bukkit.broadcastMessage("executed");
     }
 }
