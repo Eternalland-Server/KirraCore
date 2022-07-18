@@ -49,6 +49,8 @@ public class FunctionPacket {
                 .filter(Objects::nonNull)
                 .forEach(player -> {
                     KirraCoreBukkitAPI.getTELEPORTING_MAP().put(player.getUniqueId(), future);
+                    val testFuture = KirraCoreBukkitAPI.getTELEPORTING_MAP().get(player.getUniqueId());
+                    Bukkit.broadcastMessage("future" + testFuture);
                     KirraCoreBukkitAPI.showDefaultLoadingAnimation(player);
                 });
     }
