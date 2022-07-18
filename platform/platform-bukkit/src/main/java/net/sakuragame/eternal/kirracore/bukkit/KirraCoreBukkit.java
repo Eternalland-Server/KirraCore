@@ -68,8 +68,6 @@ public class KirraCoreBukkit extends JavaPlugin {
                 if (clazz.getAnnotation(CommandMeta.class) == null) {
                     return;
                 }
-                System.out.println("not null!");
-                System.out.println("clazz: " + clazz.getName());
                 honcho.registerCommand(clazz.newInstance());
             } catch (Exception ignored) {
             }

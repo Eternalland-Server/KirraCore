@@ -42,7 +42,12 @@ public class FunctionPacket {
                     .map(KirraCoreBungee.getInstance().getProxy()::getPlayer)
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());
-            players.forEach(player -> player.connect(server));
+            players.forEach(player -> player.connect(server, (bool, throwable) -> {
+                        if (!bool) {
+                            sendTeleportFailedPacket(c2bPacket);
+                        }
+                    })
+            );
         }, 1, TimeUnit.SECONDS);
     }
 
