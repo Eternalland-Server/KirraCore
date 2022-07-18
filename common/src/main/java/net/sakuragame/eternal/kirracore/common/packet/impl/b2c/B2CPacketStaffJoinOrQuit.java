@@ -12,6 +12,7 @@ import net.sakuragame.eternal.kirracore.common.packet.MatchType;
 public class B2CPacketStaffJoinOrQuit implements IPacket {
 
     private String staffName;
+    private String joinOrQuitServerID;
     private boolean isJoin;
 
     @Override
@@ -29,6 +30,7 @@ public class B2CPacketStaffJoinOrQuit implements IPacket {
         val jsonObj = new JsonObject();
         jsonObj.addProperty("packetID", id());
         jsonObj.addProperty("staffName", staffName);
+        jsonObj.addProperty("joinOrQuitServerID", joinOrQuitServerID);
         jsonObj.addProperty("isJoin", isJoin);
         return jsonObj;
     }
@@ -36,6 +38,7 @@ public class B2CPacketStaffJoinOrQuit implements IPacket {
     @Override
     public void deserialized(JsonObject jsonObj) {
         this.staffName = jsonObj.get("staffName").getAsString();
+        this.joinOrQuitServerID = jsonObj.get("joinOrQuitServerID").getAsString();
         this.isJoin = jsonObj.get("isJoin").getAsBoolean();
     }
 }

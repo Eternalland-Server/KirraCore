@@ -48,10 +48,12 @@ public class FunctionPacket {
 
     public static void sendStaffJoinOrQuitPacket(
             @NotNull String staffName,
+            @NotNull String serverID,
             boolean isJoin
     ) {
         val packet = new B2CPacketStaffJoinOrQuit();
         packet.setStaffName(staffName);
+        packet.setJoinOrQuitServerID(serverID);
         packet.setJoin(isJoin);
         NetworkHandler.sendPacket(packet, true);
     }

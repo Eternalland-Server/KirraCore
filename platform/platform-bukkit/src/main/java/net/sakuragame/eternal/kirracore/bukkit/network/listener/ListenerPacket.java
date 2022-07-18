@@ -28,9 +28,9 @@ public class ListenerPacket {
     public void onStaffJoinOrQuit(B2CPacketStaffJoinOrQuit packet) {
         var message = "";
         if (packet.isJoin()) {
-            message = "&c[System] &7管理员 " + packet.getStaffName() + " 进入了服务器.";
+            message = "&c[System] &7管理员 " + packet.getStaffName() + " 进入了 " + packet.getJoinOrQuitServerID() + " 服务器.";
         } else {
-            message = "&c[System] &7管理员 " + packet.getStaffName() + " 退出了服务器.";
+            message = "&c[System] &7管理员 " + packet.getStaffName() +  " 退出了 " + packet.getJoinOrQuitServerID() + " 服务器.";
         }
         Broadcast.send(CC.toColored(message), KirraCoreBukkitAPI::isAdminPlayer);
     }

@@ -1,8 +1,8 @@
 package net.sakuragame.eternal.kirracore.bungee.listener;
 
 import lombok.val;
-import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.ServerConnectedEvent;
+import net.md_5.bungee.api.event.ServerDisconnectEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.sakuragame.eternal.kirracore.bungee.function.FunctionPacket;
@@ -15,15 +15,15 @@ public class ListenerPlayer implements Listener {
     public void onStaffJoin(ServerConnectedEvent event) {
         val player = event.getPlayer();
         if (player.hasPermission("admin")) {
-            FunctionPacket.sendStaffJoinOrQuitPacket(player.getName(), true);
+            FunctionPacket.sendStaffJoinOrQuitPacket(player.getName(), event.getServer().getInfo().getName(), true);
         }
     }
 
     @EventHandler
-    public void onStaffLeft(PlayerDisconnectEvent event) {
+    public void onStaffLeft(ServerDisconnectEvent event) {
         val player = event.getPlayer();
         if (player.hasPermission("admin")) {
-            FunctionPacket.sendStaffJoinOrQuitPacket(player.getName(), false);
+            FunctionPacket.sendStaffJoinOrQuitPacket(player.getName(), event.getTarget().getName(),false);
         }
     }
 }
