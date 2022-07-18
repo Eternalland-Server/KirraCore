@@ -70,18 +70,21 @@ public class ListenerPacket {
         System.out.println(packet);
         System.out.println(Utils.getCURRENT_SERVER_NAME());
         if (packet.getServerFrom().equals(Utils.getCURRENT_SERVER_NAME())) {
-            System.out.println("reached 1");
             packet.getPlayerIDs()
                     .stream()
                     .map(uid -> Bukkit.getPlayer(ClientManagerAPI.getUserUUID(uid)))
                     .filter(Objects::nonNull).forEach(player -> {
+                        Bukkit.broadcastMessage("reached 1");
                         val future = KirraCoreBukkitAPI.getTELEPORTING_MAP().get(player.getUniqueId());
+                        Bukkit.broadcastMessage("reached 2");
                         if (future == null) {
                             return;
                         }
+                        Bukkit.broadcastMessage("reached 3");
                         future.complete(TResult.SERVER_CLOSED);
                         KirraCoreBukkitAPI.getTELEPORTING_MAP().remove(player.getUniqueId());
                         new TeleportServerFailedEvent(player).call();
+                        Bukkit.broadcastMessage("reached 4");
                     });
         }
     }
