@@ -7,7 +7,6 @@ import net.sakuragame.eternal.kirracore.bukkit.KirraCoreBukkitAPI;
 import net.sakuragame.eternal.kirracore.bukkit.event.TeleportServerFailedEvent;
 import net.sakuragame.eternal.kirracore.bukkit.function.FunctionRestart;
 import net.sakuragame.eternal.kirracore.bukkit.util.Broadcast;
-import net.sakuragame.eternal.kirracore.bukkit.util.Scheduler;
 import net.sakuragame.eternal.kirracore.bukkit.util.Utils;
 import net.sakuragame.eternal.kirracore.common.annotation.KComingPacketHandler;
 import net.sakuragame.eternal.kirracore.common.packet.impl.a2c.A2CPacketServerShutdown;
@@ -49,7 +48,6 @@ public class ListenerPacket {
                             return;
                         }
                         future.complete(TResult.SUCCESS);
-                        Bukkit.broadcastMessage("succ");
                         KirraCoreBukkitAPI.getTELEPORTING_MAP().remove(player.getUniqueId());
                     });
             return;

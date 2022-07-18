@@ -26,7 +26,7 @@ public class ListenerPacket {
         } else {
             server = KirraCoreBungee.getInstance().getServerManager().getByBalancing(packet.getServerTo());
         }
-        if (server == null) {
+        if (server == null || server.getName().equalsIgnoreCase(packet.getServerTo())) {
             FunctionPacket.sendTeleportFailedPacket(packet);
             return;
         }
