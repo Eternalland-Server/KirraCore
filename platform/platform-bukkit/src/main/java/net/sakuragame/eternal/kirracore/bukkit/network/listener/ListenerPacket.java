@@ -7,6 +7,7 @@ import net.sakuragame.eternal.kirracore.bukkit.KirraCoreBukkitAPI;
 import net.sakuragame.eternal.kirracore.bukkit.event.TeleportServerFailedEvent;
 import net.sakuragame.eternal.kirracore.bukkit.function.FunctionRestart;
 import net.sakuragame.eternal.kirracore.bukkit.util.Broadcast;
+import net.sakuragame.eternal.kirracore.bukkit.util.Scheduler;
 import net.sakuragame.eternal.kirracore.bukkit.util.Utils;
 import net.sakuragame.eternal.kirracore.common.annotation.KComingPacketHandler;
 import net.sakuragame.eternal.kirracore.common.packet.impl.a2c.A2CPacketServerShutdown;
@@ -76,6 +77,10 @@ public class ListenerPacket {
                     .filter(Objects::nonNull).forEach(player -> {
                         Bukkit.broadcastMessage("reached 1");
                         Bukkit.broadcastMessage(KirraCoreBukkitAPI.getTELEPORTING_MAP().toString());
+                        Scheduler.run(() -> {
+                            Bukkit.broadcastMessage("run in sync");
+                            Bukkit.broadcastMessage(KirraCoreBukkitAPI.getTELEPORTING_MAP().get(player.getUniqueId()).toString());
+                        });
                         val future = KirraCoreBukkitAPI.getTELEPORTING_MAP().get(player.getUniqueId());
                         Bukkit.broadcastMessage("reached 2");
                         if (future == null) {
