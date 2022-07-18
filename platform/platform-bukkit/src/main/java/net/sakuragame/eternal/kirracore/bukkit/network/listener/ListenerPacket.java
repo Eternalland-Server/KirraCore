@@ -30,7 +30,7 @@ public class ListenerPacket {
         if (packet.isJoin()) {
             message = "&c[System] &7管理员 " + packet.getStaffName() + " 进入了 " + packet.getJoinOrQuitServerID() + " 服务器.";
         } else {
-            message = "&c[System] &7管理员 " + packet.getStaffName() +  " 退出了 " + packet.getJoinOrQuitServerID() + " 服务器.";
+            message = "&c[System] &7管理员 " + packet.getStaffName() + " 退出了 " + packet.getJoinOrQuitServerID() + " 服务器.";
         }
         Broadcast.send(CC.toColored(message), KirraCoreBukkitAPI::isAdminPlayer);
     }
@@ -75,6 +75,7 @@ public class ListenerPacket {
                     .map(uid -> Bukkit.getPlayer(ClientManagerAPI.getUserUUID(uid)))
                     .filter(Objects::nonNull).forEach(player -> {
                         Bukkit.broadcastMessage("reached 1");
+                        Bukkit.broadcastMessage(KirraCoreBukkitAPI.getTELEPORTING_MAP().toString());
                         val future = KirraCoreBukkitAPI.getTELEPORTING_MAP().get(player.getUniqueId());
                         Bukkit.broadcastMessage("reached 2");
                         if (future == null) {
