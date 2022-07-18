@@ -21,7 +21,7 @@ public class FunctionPacket {
     public static void sendTeleportFailedPacket(@NotNull C2BPacketPlayerSwitchServer c2bPacket) {
         val packet = new B2CPacketPlayerSwitchServerFailed();
         packet.setPlayerIDs(c2bPacket.getPlayerIDs());
-        packet.setServerTo(c2bPacket.getServerFrom());
+        packet.setServerFrom(c2bPacket.getServerFrom());
         packet.setServerTo(c2bPacket.getServerTo());
         packet.setReason(FailedReason.SERVER_CLOSED);
         NetworkHandler.sendPacket(packet, true);
