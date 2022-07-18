@@ -10,6 +10,7 @@ import net.sakuragame.eternal.kirracore.bukkit.util.taskchain.impl.SingleTask;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
@@ -27,7 +28,7 @@ public class TaskChain {
     private static final ScheduledExecutorService SCHEDULER = Executors.newSingleThreadScheduledExecutor();
 
     @Getter
-    Queue<ITask> tasks;
+    Queue<ITask> tasks = new ArrayDeque<>();
 
     @NotNull
     public TaskChain delay(long delay) {
