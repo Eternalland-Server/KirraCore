@@ -48,7 +48,7 @@ public class B2CPacketPlayerSwitchServer implements IPacket {
 
     @Override
     public void deserialized(JsonObject jsonObj) {
-        this.playerIDs = KirraCoreCommon.getGSON().fromJson(jsonObj.get("playerID").getAsString(), TypeToken.INT_LIST_TYPE);
+        this.playerIDs = KirraCoreCommon.getGSON().fromJson(jsonObj.get("playerIDs").getAsString(), TypeToken.INT_LIST_TYPE);
         this.serverFrom = jsonObj.get("serverFrom").getAsString();
         this.serverTo = jsonObj.get("serverTo").getAsString();
         this.assignType = AssignType.match(jsonObj.get("assignType").getAsInt());
