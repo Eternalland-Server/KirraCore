@@ -70,7 +70,7 @@ public class KirraCoreBukkit extends JavaPlugin {
                 }
                 System.out.println("not null!");
                 System.out.println("clazz: " + clazz.getName());
-                honcho.registerCommand(clazz);
+                honcho.registerCommand(clazz.newInstance());
             } catch (Exception ignored) {
             }
         });
