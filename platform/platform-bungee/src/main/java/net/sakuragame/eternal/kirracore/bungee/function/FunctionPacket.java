@@ -43,6 +43,7 @@ public class FunctionPacket {
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());
             players.forEach(player -> player.connect(server, (bool, throwable) -> {
+                        throwable.printStackTrace();
                         if (!bool) {
                             sendTeleportFailedPacket(c2bPacket);
                         }
