@@ -79,7 +79,7 @@ public class ListenerPacket {
                         Bukkit.broadcastMessage(KirraCoreBukkitAPI.getTELEPORTING_MAP().toString());
                         Scheduler.run(() -> {
                             Bukkit.broadcastMessage("run in sync");
-                            Bukkit.broadcastMessage(KirraCoreBukkitAPI.getTELEPORTING_MAP().get(player.getUniqueId()).toString());
+                            Bukkit.broadcastMessage(KirraCoreBukkitAPI.getTELEPORTING_MAP().toString());
                         });
                         val future = KirraCoreBukkitAPI.getTELEPORTING_MAP().get(player.getUniqueId());
                         Bukkit.broadcastMessage("reached 2");
