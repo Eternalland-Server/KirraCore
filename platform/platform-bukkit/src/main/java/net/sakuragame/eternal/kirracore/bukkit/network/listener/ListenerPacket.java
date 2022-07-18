@@ -68,6 +68,7 @@ public class ListenerPacket {
     @KComingPacketHandler
     public void onTeleportFailed(B2CPacketPlayerSwitchServerFailed packet) {
         System.out.println(packet);
+        System.out.println(Utils.getCURRENT_SERVER_NAME());
         if (packet.getServerFrom().equals(Utils.getCURRENT_SERVER_NAME())) {
             System.out.println("reached 1");
             packet.getPlayerIDs()
