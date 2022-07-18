@@ -81,7 +81,7 @@ public class ListenerPacket {
                         }
                         future.complete(TResult.SERVER_CLOSED);
                         KirraCoreBukkitAPI.getTELEPORTING_MAP().remove(player.getUniqueId());
-                        Bukkit.getPluginManager().callEvent(new TeleportServerFailedEvent(player));
+                        new TeleportServerFailedEvent(player).call();
                     });
         }
     }
