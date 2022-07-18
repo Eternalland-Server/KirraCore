@@ -11,15 +11,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerToggleSneakEvent;
 
 @KListener
 public class ListenerTeleport implements Listener {
-
-    @EventHandler
-    public void onSneak(PlayerToggleSneakEvent event) {
-        Bukkit.broadcastMessage("reached test sneak");
-    }
 
     @EventHandler
     public void onTeleportFailed(TeleportServerFailedEvent event) {
