@@ -47,7 +47,7 @@ public class FunctionPacket {
                     sendTeleportFailedPacket(c2bPacket);
                 }
             }));
-        }, 2, TimeUnit.SECONDS);
+        }, 1, TimeUnit.SECONDS);
     }
 
     public static void sendStaffSwitchServerPacket(
