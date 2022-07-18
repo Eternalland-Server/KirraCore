@@ -35,6 +35,7 @@ public class B2CPacketPlayerSwitchServerFailed implements IPacket {
     @Override
     public JsonObject serialized() {
         val jsonObj = new JsonObject();
+        jsonObj.addProperty("packetID", id());
         jsonObj.addProperty("playerIDs", KirraCoreCommon.getGSON().toJson(playerIDs));
         jsonObj.addProperty("serverFrom", serverFrom);
         jsonObj.addProperty("serverTo", serverTo);
