@@ -42,7 +42,7 @@ public class RepeatedTask implements ITask {
                 @SneakyThrows
                 @Override
                 public void run() {
-                    if (!predicate.call()) {
+                    if (predicate.call()) {
                         this.cancel();
                         future.complete(true);
                     }
@@ -55,7 +55,7 @@ public class RepeatedTask implements ITask {
                 @SneakyThrows
                 @Override
                 public void run() {
-                    if (!predicate.call()) {
+                    if (predicate.call()) {
                         this.cancel();
                         future.complete(true);
                     }
