@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 @CommandMeta(label = {"kRestart"}, permission = "admin")
 public class CommandRestart {
 
-    public void execute(CommandSender sender, Integer delaySeconds, String reason) {
+    public void execute(CommandSender sender, int delaySeconds, String reason) {
         FunctionRestart.execute(delaySeconds, reason);
     }
 }
