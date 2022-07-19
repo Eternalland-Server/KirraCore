@@ -76,6 +76,7 @@ public class TaskChain {
     }
 
     public void execute() {
+        Bukkit.broadcastMessage(tasks.toString());
         SCHEDULER.execute(() -> {
             val task = tasks.poll();
             Bukkit.broadcastMessage("poll");
