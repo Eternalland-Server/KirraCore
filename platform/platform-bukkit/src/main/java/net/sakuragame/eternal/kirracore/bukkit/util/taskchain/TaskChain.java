@@ -7,6 +7,7 @@ import net.sakuragame.eternal.kirracore.bukkit.KirraCoreBukkit;
 import net.sakuragame.eternal.kirracore.bukkit.util.taskchain.impl.PureDelayedTask;
 import net.sakuragame.eternal.kirracore.bukkit.util.taskchain.impl.RepeatedTask;
 import net.sakuragame.eternal.kirracore.bukkit.util.taskchain.impl.SingleTask;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -77,15 +78,20 @@ public class TaskChain {
     public void execute() {
         SCHEDULER.execute(() -> {
             val task = tasks.poll();
+            Bukkit.broadcastMessage("poll");
             if (task == null) {
+                Bukkit.broadcastMessage("null");
                 return;
             }
             if (task instanceof PureDelayedTask) {
+                Bukkit.broadcastMessage("delay");
                 SCHEDULER.scheduleWithFixedDelay(task::execute, 0, ((PureDelayedTask) task).getDelay(), TimeUnit.MILLISECONDS);
                 return;
             }
+            Bukkit.broadcastMessage("whenComplete");
             task.execute().whenComplete((bool, throwable) -> {
                 if (bool) {
+                    Bukkit.broadcastMessage("do recursive");
                     execute();
                 }
             });
