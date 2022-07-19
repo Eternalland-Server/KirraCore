@@ -28,12 +28,12 @@ public class FunctionRestart implements Listener {
         RESTARTING = true;
         val i = new AtomicInteger(delaySeconds);
         new TaskChain()
-                .delay(20)
+                .delay(1)
                 .task(() -> {
                     Broadcast.send(Lang.NOTICE_MSG_PREFIX + "服务器即将重启!");
                     Broadcast.send(Lang.NOTICE_MSG_PREFIX + "原因: &f" + reason);
                 }, true)
-                .delay(5)
+                .delay(1)
                 .repeatedTask(() -> {
                     val secs = i.decrementAndGet();
                     if (secs < 20 && secs % 5 == 0) {
@@ -44,7 +44,7 @@ public class FunctionRestart implements Listener {
                     }
                 }, () -> i.get() < 1, 20)
                 .task(() -> Bukkit.getOnlinePlayers().forEach(player -> player.kickPlayer(Bukkit.getShutdownMessage())))
-                .delayedTask(Bukkit::shutdown, 100)
+                .delayedTask(Bukkit::shutdown, 5)
                 .execute();
     }
 

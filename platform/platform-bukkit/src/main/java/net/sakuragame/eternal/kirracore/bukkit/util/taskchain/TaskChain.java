@@ -79,7 +79,7 @@ public class TaskChain {
             }
             if (task instanceof PureDelayedTask) {
                 val delayedTask = (PureDelayedTask) task;
-                SCHEDULER.schedule(this::execute, delayedTask.getDelay(), TimeUnit.MILLISECONDS);
+                SCHEDULER.schedule(this::execute, delayedTask.getDelay(), TimeUnit.SECONDS);
                 return;
             }
             task.execute().whenComplete((bool, throwable) -> {
