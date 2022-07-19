@@ -85,16 +85,16 @@ public class TaskChain {
                 Bukkit.broadcastMessage("delay");
                 Bukkit.broadcastMessage("delay: " + delayedTask.getDelay());
                 SCHEDULER.schedule(task::execute, delayedTask.getDelay(), TimeUnit.MILLISECONDS);
+                Bukkit.broadcastMessage("executed?");
                 return;
-            } else {
-                Bukkit.broadcastMessage("whenComplete");
-                task.execute().whenComplete((bool, throwable) -> {
-                    if (bool) {
-                        Bukkit.broadcastMessage("do recursive");
-                        execute();
-                    }
-                });
             }
+            Bukkit.broadcastMessage("whenComplete");
+            task.execute().whenComplete((bool, throwable) -> {
+                if (bool) {
+                    Bukkit.broadcastMessage("do recursive");
+                    execute();
+                }
+            });
         });
     }
 }
