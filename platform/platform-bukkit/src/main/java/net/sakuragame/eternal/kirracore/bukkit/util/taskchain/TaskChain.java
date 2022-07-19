@@ -11,7 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayDeque;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
@@ -29,7 +29,7 @@ public class TaskChain {
     private static final ScheduledExecutorService SCHEDULER = Executors.newSingleThreadScheduledExecutor();
 
     @Getter
-    Queue<ITask> tasks = new ArrayDeque<>();
+    Queue<ITask> tasks = new PriorityQueue<>();
 
     @NotNull
     public TaskChain delay(long delay) {
