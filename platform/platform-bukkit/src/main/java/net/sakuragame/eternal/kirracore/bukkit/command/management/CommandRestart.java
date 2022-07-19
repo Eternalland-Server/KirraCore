@@ -3,7 +3,6 @@ package net.sakuragame.eternal.kirracore.bukkit.command.management;
 import com.qrakn.honcho.command.CommandMeta;
 import net.sakuragame.eternal.kirracore.bukkit.function.FunctionRestart;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 @CommandMeta(label = {"kRestart"}, permission = "admin")
 public class CommandRestart {

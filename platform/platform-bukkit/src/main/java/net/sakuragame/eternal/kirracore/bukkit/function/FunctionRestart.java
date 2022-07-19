@@ -36,7 +36,7 @@ public class FunctionRestart implements Listener {
                 .delay(1)
                 .repeatedTask(() -> {
                     val secs = i.decrementAndGet();
-                    if (secs < 20 && secs % 5 == 0) {
+                    if (secs < 30 && (secs % 5 == 0 || secs < 5)) {
                         Bukkit.getOnlinePlayers().forEach(player -> {
                             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1f, 1f);
                             player.sendTitle("", CC.toColored("&7&o服务器还有 " + secs + " 秒重启."), 0, 25, 0);
