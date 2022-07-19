@@ -6,9 +6,11 @@ import lombok.Getter;
 import lombok.val;
 import net.sakuragame.eternal.kirracore.bukkit.compat.CompatManager;
 import net.sakuragame.eternal.kirracore.bukkit.network.NetworkHandler;
+import net.sakuragame.eternal.kirracore.bukkit.network.heartbeat.HeartBeatRunnable;
 import net.sakuragame.eternal.kirracore.bukkit.profile.ProfileManager;
 import net.sakuragame.eternal.kirracore.bukkit.storage.Database;
 import net.sakuragame.eternal.kirracore.bukkit.util.ClassUtil;
+import net.sakuragame.eternal.kirracore.bukkit.util.taskchain.TaskChain;
 import net.sakuragame.eternal.kirracore.common.annotation.KListener;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
@@ -60,6 +62,12 @@ public class KirraCoreBukkit extends JavaPlugin {
         initCommands();
 
         NetworkHandler.init();
+    }
+
+    @Override
+    public void onDisable() {
+        HeartBeatRunnable.getSCHEDULER().shutdown();
+        TaskChain.getSCHEDULER().shutdown();
     }
 
     private void initCommands() {

@@ -38,7 +38,7 @@ public class ListenerPacket {
     @KComingPacketHandler
     public void onTeleport(B2CPacketPlayerSwitchServer packet) {
         Bukkit.broadcastMessage("reached switch");
-        if (packet.getServerFrom().equals(Utils.getCURRENT_SERVER_NAME())) {
+        if (packet.getServerFrom().equals(Utils.getCURRENT_SERVER_ID())) {
             packet.getPlayerIDs()
                     .stream()
                     .map(uid -> Bukkit.getPlayer(ClientManagerAPI.getUserUUID(uid)))
@@ -52,7 +52,7 @@ public class ListenerPacket {
                     });
             return;
         }
-        if (packet.getServerTo().equals(Utils.getCURRENT_SERVER_NAME()) && packet.getAssignType() != AssignType.NONE) {
+        if (packet.getServerTo().equals(Utils.getCURRENT_SERVER_ID()) && packet.getAssignType() != AssignType.NONE) {
             val uuids = packet.getPlayerIDs()
                     .stream()
                     .map(ClientManagerAPI::getUserUUID)
@@ -69,8 +69,8 @@ public class ListenerPacket {
     @KComingPacketHandler
     public void onTeleportFailed(B2CPacketPlayerSwitchServerFailed packet) {
         System.out.println(packet);
-        System.out.println(Utils.getCURRENT_SERVER_NAME());
-        if (packet.getServerFrom().equals(Utils.getCURRENT_SERVER_NAME())) {
+        System.out.println(Utils.getCURRENT_SERVER_ID());
+        if (packet.getServerFrom().equals(Utils.getCURRENT_SERVER_ID())) {
             packet.getPlayerIDs()
                     .stream()
                     .map(uid -> Bukkit.getPlayer(ClientManagerAPI.getUserUUID(uid)))

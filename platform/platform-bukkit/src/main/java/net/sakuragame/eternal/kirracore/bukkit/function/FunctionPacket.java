@@ -35,7 +35,7 @@ public class FunctionPacket {
                         .filter(uid -> uid != -1)
                         .collect(Collectors.toList())
         );
-        packet.setServerFrom(Utils.getCURRENT_SERVER_NAME());
+        packet.setServerFrom(Utils.getCURRENT_SERVER_ID());
         packet.setServerTo(serverID);
         packet.setAssignType(assignType == null ? AssignType.NONE : assignType);
         packet.setAssignValue(assignValue == null ? "null" : assignValue);

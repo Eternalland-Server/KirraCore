@@ -1,8 +1,10 @@
 package net.sakuragame.eternal.kirracore.bukkit.network.heartbeat;
 
+import lombok.Getter;
 import lombok.val;
 import net.minecraft.server.v1_12_R1.MinecraftServer;
 import net.sakuragame.eternal.kirracore.bukkit.network.NetworkHandler;
+import net.sakuragame.eternal.kirracore.bukkit.util.Utils;
 import net.sakuragame.eternal.kirracore.common.packet.impl.c2b.C2BPacketHeartBeat;
 import net.sakuragame.serversystems.manage.client.api.ClientManagerAPI;
 import org.bukkit.Bukkit;
@@ -14,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class HeartBeatRunnable {
 
-    private static final String SERVER_ID = ClientManagerAPI.getServerID();
+    @Getter
     private static final ScheduledExecutorService SCHEDULER = Executors.newSingleThreadScheduledExecutor();
 
     public static void run() {
@@ -26,7 +28,7 @@ public class HeartBeatRunnable {
 
             val packet = new C2BPacketHeartBeat();
 
-            packet.setServerID(SERVER_ID);
+            packet.setServerID(Utils.getCURRENT_SERVER_ID());
             packet.setTps(getRecentTps());
             packet.setTime(System.currentTimeMillis());
             packet.setOnlinePlayers(playerIDs);
