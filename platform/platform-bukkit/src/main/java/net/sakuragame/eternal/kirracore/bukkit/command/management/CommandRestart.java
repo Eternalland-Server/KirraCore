@@ -6,7 +6,7 @@ import net.sakuragame.eternal.kirracore.bukkit.function.FunctionRestart;
 @CommandMeta(label = {"kRestart"}, permission = "admin")
 public class CommandRestart {
 
-    public void execute(int delaySeconds, String reason) {
+    public void execute(Integer delaySeconds, String reason) {
         FunctionRestart.execute(delaySeconds, reason);
     }
 }
