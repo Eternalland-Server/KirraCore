@@ -30,9 +30,6 @@ public class ListenerPacket {
             FunctionPacket.sendTeleportFailedPacket(packet);
             return;
         }
-        System.out.println("server: " + server);
-        System.out.println("to: " + packet.getServerTo());
-        System.out.println("from: " + packet.getServerFrom());
         FunctionPacket.sendTeleportPacket(packet, server);
     }
 }

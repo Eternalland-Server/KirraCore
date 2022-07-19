@@ -37,7 +37,6 @@ public class ListenerPacket {
 
     @KComingPacketHandler
     public void onTeleport(B2CPacketPlayerSwitchServer packet) {
-        Bukkit.broadcastMessage("reached switch");
         if (packet.getServerFrom().equals(Utils.getCURRENT_SERVER_ID())) {
             packet.getPlayerIDs()
                     .stream()
@@ -68,25 +67,18 @@ public class ListenerPacket {
 
     @KComingPacketHandler
     public void onTeleportFailed(B2CPacketPlayerSwitchServerFailed packet) {
-        System.out.println(packet);
-        System.out.println(Utils.getCURRENT_SERVER_ID());
         if (packet.getServerFrom().equals(Utils.getCURRENT_SERVER_ID())) {
             packet.getPlayerIDs()
                     .stream()
                     .map(uid -> Bukkit.getPlayer(ClientManagerAPI.getUserUUID(uid)))
                     .filter(Objects::nonNull).forEach(player -> {
-                        Bukkit.broadcastMessage("reached 1");
-                        Bukkit.broadcastMessage(KirraCoreBukkitAPI.getTELEPORTING_MAP().toString());
                         val future = KirraCoreBukkitAPI.getTELEPORTING_MAP().get(player.getUniqueId());
-                        Bukkit.broadcastMessage("reached 2");
                         if (future == null) {
                             return;
                         }
-                        Bukkit.broadcastMessage("reached 3");
                         future.complete(TResult.SERVER_CLOSED);
                         KirraCoreBukkitAPI.getTELEPORTING_MAP().remove(player.getUniqueId());
                         new TeleportServerFailedEvent(player).call();
-                        Bukkit.broadcastMessage("reached 4");
                     });
         }
     }
