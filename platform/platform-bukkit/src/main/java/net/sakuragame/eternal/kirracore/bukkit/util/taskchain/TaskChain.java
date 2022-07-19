@@ -73,28 +73,26 @@ public class TaskChain {
 
     public void execute() {
         Bukkit.broadcastMessage(tasks.toString());
-        SCHEDULER.execute(() -> {
-            val task = tasks.poll();
-            Bukkit.broadcastMessage("poll");
-            if (task == null) {
-                Bukkit.broadcastMessage("null");
-                return;
+        val task = tasks.poll();
+        Bukkit.broadcastMessage("poll");
+        if (task == null) {
+            Bukkit.broadcastMessage("null");
+            return;
+        }
+        if (task instanceof PureDelayedTask) {
+            val delayedTask = (PureDelayedTask) task;
+            Bukkit.broadcastMessage("delay");
+            Bukkit.broadcastMessage("delay: " + delayedTask.getDelay());
+            SCHEDULER.schedule(task::execute, delayedTask.getDelay(), TimeUnit.MILLISECONDS);
+            Bukkit.broadcastMessage("executed?");
+            return;
+        }
+        Bukkit.broadcastMessage("whenComplete");
+        task.execute().whenComplete((bool, throwable) -> {
+            if (bool) {
+                Bukkit.broadcastMessage("do recursive");
+                execute();
             }
-            if (task instanceof PureDelayedTask) {
-                val delayedTask = (PureDelayedTask) task;
-                Bukkit.broadcastMessage("delay");
-                Bukkit.broadcastMessage("delay: " + delayedTask.getDelay());
-                SCHEDULER.schedule(task::execute, delayedTask.getDelay(), TimeUnit.MILLISECONDS);
-                Bukkit.broadcastMessage("executed?");
-                return;
-            }
-            Bukkit.broadcastMessage("whenComplete");
-            task.execute().whenComplete((bool, throwable) -> {
-                if (bool) {
-                    Bukkit.broadcastMessage("do recursive");
-                    execute();
-                }
-            });
         });
     }
 }
