@@ -84,8 +84,10 @@ public class TaskChain {
                 return;
             }
             if (task instanceof PureDelayedTask) {
+                val delayedTask = (PureDelayedTask) task;
                 Bukkit.broadcastMessage("delay");
-                SCHEDULER.scheduleWithFixedDelay(task::execute, 0, ((PureDelayedTask) task).getDelay(), TimeUnit.MILLISECONDS);
+                Bukkit.broadcastMessage("delay: " + delayedTask.getDelay());
+                SCHEDULER.scheduleWithFixedDelay(task::execute, 0, delayedTask.getDelay(), TimeUnit.MILLISECONDS);
                 return;
             }
             Bukkit.broadcastMessage("whenComplete");
