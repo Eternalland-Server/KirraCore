@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 public class HeartBeatRunnable {
 
+    @Getter
     private static final ScheduledExecutorService SCHEDULER = Executors.newSingleThreadScheduledExecutor();
 
     @Getter

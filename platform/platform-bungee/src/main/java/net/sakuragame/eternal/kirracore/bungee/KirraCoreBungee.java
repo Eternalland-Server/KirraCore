@@ -6,6 +6,7 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.sakuragame.eternal.kirracore.bungee.manager.ServerManager;
 import net.sakuragame.eternal.kirracore.bungee.network.NetworkHandler;
+import net.sakuragame.eternal.kirracore.bungee.network.heartbeat.HeartBeatRunnable;
 import net.sakuragame.eternal.kirracore.bungee.util.ClassUtil;
 import net.sakuragame.eternal.kirracore.common.annotation.KListener;
 
@@ -31,10 +32,14 @@ public class KirraCoreBungee extends Plugin {
 
         clazzs = ClassUtil.getClassesInPackage(this, "net.sakuragame.eternal.kirracore.bungee");
 
-
         initListeners();
 
         NetworkHandler.init();
+    }
+
+    @Override
+    public void onDisable() {
+        HeartBeatRunnable.getSCHEDULER().shutdown();
     }
 
     private void initListeners() {

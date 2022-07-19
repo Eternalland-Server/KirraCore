@@ -66,8 +66,8 @@ public class KirraCoreBukkit extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        HeartBeatRunnable.getSCHEDULER().shutdown();
-        TaskChain.getSCHEDULER().shutdown();
+        HeartBeatRunnable.getSCHEDULER().shutdownNow();
+        TaskChain.getSCHEDULER().shutdownNow();
     }
 
     private void initCommands() {
