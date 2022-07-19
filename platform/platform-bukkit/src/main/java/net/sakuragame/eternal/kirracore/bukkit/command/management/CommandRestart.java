@@ -8,10 +8,6 @@ import org.bukkit.entity.Player;
 @CommandMeta(label = {"kRestart"}, permission = "admin")
 public class CommandRestart {
 
-    public void execute(Player player, String delaySeconds, String reason) {
-        FunctionRestart.execute(Integer.parseInt(delaySeconds), reason);
-    }
-
     public void execute(CommandSender sender, String delaySeconds, String reason) {
         FunctionRestart.execute(Integer.parseInt(delaySeconds), reason);
     }
