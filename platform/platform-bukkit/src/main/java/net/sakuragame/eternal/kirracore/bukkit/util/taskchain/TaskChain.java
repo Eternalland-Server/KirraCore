@@ -11,12 +11,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.PriorityQueue;
 import java.util.Queue;
-import java.util.concurrent.Callable;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 @SuppressWarnings("UnusedReturnValue")
 @RequiredArgsConstructor
@@ -29,7 +25,7 @@ public class TaskChain {
     private static final ScheduledExecutorService SCHEDULER = Executors.newSingleThreadScheduledExecutor();
 
     @Getter
-    Queue<ITask> tasks = new PriorityQueue<>();
+    Queue<ITask> tasks = new LinkedBlockingQueue<>();
 
     @NotNull
     public TaskChain delay(long delay) {
