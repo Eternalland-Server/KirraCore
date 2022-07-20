@@ -3,7 +3,6 @@ package net.sakuragame.eternal.kirracore.bukkit.function;
 import lombok.val;
 import net.sakuragame.eternal.kirracore.bukkit.KirraCoreBukkit;
 import net.sakuragame.eternal.kirracore.bukkit.util.Broadcast;
-import net.sakuragame.eternal.kirracore.bukkit.util.taskchain.TaskChain;
 import net.sakuragame.eternal.kirracore.common.annotation.KListener;
 import net.sakuragame.eternal.kirracore.common.util.CC;
 import net.sakuragame.eternal.kirracore.common.util.Lang;
@@ -27,13 +26,13 @@ public class FunctionRestart implements Listener {
         }
         RESTARTING = true;
         val i = new AtomicInteger(delaySeconds);
-        new TaskChain()
-                .delay(1)
+        KirraCoreBukkit.getInstance().getTaskChainFactory().newChain()
+                .delay(20)
                 .task(() -> {
                     Broadcast.send(Lang.NOTICE_MSG_PREFIX + "服务器即将重启!");
                     Broadcast.send(Lang.NOTICE_MSG_PREFIX + "原因: &f" + reason);
                 }, true)
-                .delay(1)
+                .delay(20)
                 .repeatedTask(() -> {
                     val secs = i.decrementAndGet();
                     if (secs < 30 && (secs < 5 || secs % 5 == 0)) {
@@ -44,7 +43,7 @@ public class FunctionRestart implements Listener {
                     }
                 }, () -> i.get() < 1, 20)
                 .task(() -> Bukkit.getOnlinePlayers().forEach(player -> player.kickPlayer(Bukkit.getShutdownMessage())))
-                .delayedTask(Bukkit::shutdown, 5)
+                .delayedTask(Bukkit::shutdown, 100)
                 .execute();
     }
 

@@ -4,13 +4,13 @@ import com.qrakn.honcho.Honcho;
 import com.qrakn.honcho.command.CommandMeta;
 import lombok.Getter;
 import lombok.val;
+import me.skymc.taskchain.TaskChainFactory;
 import net.sakuragame.eternal.kirracore.bukkit.compat.CompatManager;
 import net.sakuragame.eternal.kirracore.bukkit.network.NetworkHandler;
 import net.sakuragame.eternal.kirracore.bukkit.network.heartbeat.HeartBeatRunnable;
 import net.sakuragame.eternal.kirracore.bukkit.profile.ProfileManager;
 import net.sakuragame.eternal.kirracore.bukkit.storage.Database;
 import net.sakuragame.eternal.kirracore.bukkit.util.ClassUtil;
-import net.sakuragame.eternal.kirracore.bukkit.util.taskchain.TaskChain;
 import net.sakuragame.eternal.kirracore.common.annotation.KListener;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
@@ -29,6 +29,9 @@ public class KirraCoreBukkit extends JavaPlugin {
 
     @Getter
     private ProfileManager profileManager;
+
+    @Getter
+    private TaskChainFactory taskChainFactory;
 
     @Getter
     private Honcho honcho;
@@ -54,6 +57,7 @@ public class KirraCoreBukkit extends JavaPlugin {
         compatManager = new CompatManager(this);
         profileManager = new ProfileManager(this);
 
+        taskChainFactory = new TaskChainFactory(this);
         honcho = new Honcho(this);
         kConfiguration = new KConfiguration();
         database = new Database();
@@ -67,7 +71,6 @@ public class KirraCoreBukkit extends JavaPlugin {
     @Override
     public void onDisable() {
         HeartBeatRunnable.getSCHEDULER().shutdownNow();
-        TaskChain.getSCHEDULER().shutdownNow();
     }
 
     private void initCommands() {
