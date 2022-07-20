@@ -20,7 +20,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@SuppressWarnings("SpellCheckingInspection")
+@SuppressWarnings({"SpellCheckingInspection", "UnusedReturnValue"})
 public class KirraCoreBukkitAPI {
 
     protected static final HashMap<UUID, BukkitTask> LOADING_TITLE_TASK_MAP = new HashMap<>();
