@@ -26,7 +26,7 @@ public class FunctionRestart implements Listener {
         }
         RESTARTING = true;
         val i = new AtomicInteger(delaySeconds);
-        KirraCoreBukkit.getInstance().getTaskChainFactory().newChain()
+        KirraCoreBukkit.getInstance().getChainFactory().newChain()
                 .delay(20)
                 .task(() -> {
                     Broadcast.send(Lang.NOTICE_MSG_PREFIX + "服务器即将重启!");

@@ -31,7 +31,7 @@ public class KirraCoreBukkit extends JavaPlugin {
     private ProfileManager profileManager;
 
     @Getter
-    private TaskChainFactory taskChainFactory;
+    private TaskChainFactory chainFactory;
 
     @Getter
     private Honcho honcho;
@@ -57,7 +57,7 @@ public class KirraCoreBukkit extends JavaPlugin {
         compatManager = new CompatManager(this);
         profileManager = new ProfileManager(this);
 
-        taskChainFactory = new TaskChainFactory(this);
+        chainFactory = new TaskChainFactory(this);
         honcho = new Honcho(this);
         kConfiguration = new KConfiguration();
         database = new Database();

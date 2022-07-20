@@ -17,7 +17,7 @@ public class ListenerTeleport implements Listener {
     @EventHandler
     public void onTeleportFailed(TeleportServerFailedEvent event) {
         val player = event.getPlayer();
-        KirraCoreBukkit.getInstance().getTaskChainFactory().newChain()
+        KirraCoreBukkit.getInstance().getChainFactory().newChain()
                 .delayedTask(() -> KirraCoreBukkitAPI.cancelLoadingAnimation(player), 5, true)
                 .delay(10)
                 .task(() -> {
