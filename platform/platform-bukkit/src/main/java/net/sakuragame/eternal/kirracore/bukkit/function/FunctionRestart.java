@@ -49,9 +49,8 @@ public class FunctionRestart implements Listener {
 
     @EventHandler
     public void onLogin(AsyncPlayerPreLoginEvent event) {
-        Bukkit.broadcastMessage("reached 1");
-//        if (RESTARTING) {
-//            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, Bukkit.getShutdownMessage());
-//        }
+        if (RESTARTING) {
+            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, Bukkit.getShutdownMessage());
+        }
     }
 }
