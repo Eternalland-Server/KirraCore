@@ -12,7 +12,7 @@ import net.sakuragame.eternal.kirracore.common.util.TypeToken;
 
 import java.util.List;
 
-@SuppressWarnings({"unused", "SpellCheckingInspection"})
+@SuppressWarnings({"unused"})
 @Data
 @NoArgsConstructor
 public class B2CPacketPlayerSwitchServer implements IPacket {

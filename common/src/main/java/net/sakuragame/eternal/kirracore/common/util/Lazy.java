@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 public final class Lazy<T> {
+
     private volatile T value;
     private volatile Supplier<T> factory;
     private final Object lock = new Object();

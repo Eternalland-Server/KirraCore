@@ -14,6 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("SpellCheckingInspection")
 @KListener
@@ -38,14 +39,14 @@ public class ListenerGem implements Listener {
         if (item == null || item.getType() == Material.AIR) {
             return;
         }
-        if (!isConvertGemItem(item)) {
+        val convertTo = getToConvert(item);
+        if (convertTo == null) {
             return;
         }
         if (profile.convertModel != null && !profile.convertModel.equals("null")) {
             Lang.sendMessage(player, Lang.WARN_MSG_PREFIX, "您当前的模型已经存在了!", Lang.BukkitMessageType.ACTION_BAR);
             return;
         }
-        val convertTo = getToConvert(item);
         item.setAmount(item.getAmount() - 1);
         Lang.sendMessage(player, Lang.NORMAL_MSG_PREFIX, "少女祈祷中...", Lang.BukkitMessageType.ACTION_BAR);
         LocationUtil.sparkyThings(player);
@@ -58,16 +59,12 @@ public class ListenerGem implements Listener {
         }, 144);
     }
 
+    @Nullable
     private String getToConvert(ItemStack item) {
         val itemStream = ZaphkielAPI.INSTANCE.read(item);
-        return itemStream.getZaphkielData().getDeep("gem.convert-to").asString();
-    }
-
-    private Boolean isConvertGemItem(ItemStack item) {
-        val itemStream = ZaphkielAPI.INSTANCE.read(item);
         if (itemStream.isVanilla()) {
-            return false;
+            return null;
         }
-        return itemStream.getZaphkielData().getDeep("gem.convert-to") != null;
+        return KirraCoreBukkit.getInstance().getConfig().getString("settings.convert." + itemStream.getZaphkielName());
     }
 }

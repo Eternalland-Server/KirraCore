@@ -1,3 +1,20 @@
 settings:
   teleport-when-join: true
   allowed-pvp: false
+  convert:
+    green_snail_convert_gem: "绿蜗牛"
+    flower_mushroom_convert_gem: "花蘑菇"
+    elves_deer_convert_gem: "精灵鹿"
+    corythosaurus_convert_gem: "冠突龙"
+    shewei_convert_gem: "蛇娓"
+    moyunshou_convert_gem: "墨云兽"
+    lili_convert_gem: "狸力"
+    fuzhu_convert_gem: "夫诸"
+    snail_king_convert_gem: "蜗牛王"
+    snow_deer_convert_gem: "雪峰鹿"
+    ceratosaurus_convert_gem: "突击龙"
+    tuntian_convert_gem: "吞天怪"
+    tiangou_convert_gem: "天狗"
+    zhuyan_convert_gem: "朱厌"
+    baize_convert_gem: "白泽"
+    yazi_convert_gem: "睚眦"
