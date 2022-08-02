@@ -7,7 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
 @SuppressWarnings("SpellCheckingInspection")
-@CommandMeta(label = "hub", async = true)
+@CommandMeta(label = "untransform", async = true)
 public class CommandUntransform {
 
     public void execute(CommandSender sender, String playerID) {
