@@ -3,8 +3,9 @@ package net.sakuragame.eternal.kirracore.bukkit.listener;
 import lombok.val;
 import net.sakuragame.eternal.kirracore.bukkit.KirraCoreBukkit;
 import net.sakuragame.eternal.kirracore.bukkit.KirraCoreBukkitAPI;
-import net.sakuragame.eternal.kirracore.bukkit.event.TeleportServerFailedEvent;
+import net.sakuragame.eternal.kirracore.bukkit.event.PlayerTeleportServerEvent;
 import net.sakuragame.eternal.kirracore.common.annotation.KListener;
+import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.sub.TResult;
 import net.sakuragame.eternal.kirracore.common.util.CC;
 import net.sakuragame.eternal.kirracore.common.util.Lang;
 import org.bukkit.Sound;
@@ -15,7 +16,10 @@ import org.bukkit.event.Listener;
 public class ListenerTeleport implements Listener {
 
     @EventHandler
-    public void onTeleportFailed(TeleportServerFailedEvent event) {
+    public void onTeleportFailed(PlayerTeleportServerEvent event) {
+        if (event.getResult() == TResult.SUCCESS) {
+            return;
+        }
         val player = event.getPlayer();
         KirraCoreBukkit.getInstance().getChainFactory().newChain()
                 .delayedTask(() -> KirraCoreBukkitAPI.cancelLoadingAnimation(player), 5, true)

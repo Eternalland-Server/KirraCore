@@ -4,7 +4,7 @@ import lombok.val;
 import lombok.var;
 import net.sakuragame.eternal.kirracore.bukkit.KirraCoreBukkit;
 import net.sakuragame.eternal.kirracore.bukkit.KirraCoreBukkitAPI;
-import net.sakuragame.eternal.kirracore.bukkit.event.TeleportServerFailedEvent;
+import net.sakuragame.eternal.kirracore.bukkit.event.PlayerTeleportServerEvent;
 import net.sakuragame.eternal.kirracore.bukkit.function.FunctionRestart;
 import net.sakuragame.eternal.kirracore.bukkit.util.Broadcast;
 import net.sakuragame.eternal.kirracore.bukkit.util.Utils;
@@ -16,9 +16,11 @@ import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.B2CPacketStaffSwi
 import net.sakuragame.eternal.kirracore.common.packet.impl.b2c.sub.TResult;
 import net.sakuragame.eternal.kirracore.common.packet.impl.sub.AssignType;
 import net.sakuragame.eternal.kirracore.common.util.CC;
+import net.sakuragame.eternal.kirracore.common.util.PlaceholderTextUtil;
 import net.sakuragame.serversystems.manage.client.api.ClientManagerAPI;
 import org.bukkit.Bukkit;
 
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -27,10 +29,14 @@ public class ListenerPacket {
     @KComingPacketHandler
     public void onStaffJoinOrQuit(B2CPacketStaffSwitchServer packet) {
         var message = "";
+        val replaceMap = new HashMap<String, String>() {{
+            put("$staffName", packet.getStaffName());
+            put("$serverId", packet.getJoinOrQuitServerID());
+        }};
         if (packet.isJoin()) {
-            message = "&c[System] &7管理员 " + packet.getStaffName() + " 进入了 " + packet.getJoinOrQuitServerID() + " 服务器.";
+            message = PlaceholderTextUtil.replace("&c[System] &7管理员 $staffName 进入了 $serverId 服务器.", replaceMap);
         } else {
-            message = "&c[System] &7管理员 " + packet.getStaffName() + " 退出了 " + packet.getJoinOrQuitServerID() + " 服务器.";
+            message = PlaceholderTextUtil.replace("&c[System] &7管理员 $staffName 退出了 $serverId 服务器.", replaceMap);
         }
         Broadcast.send(CC.toColored(message), KirraCoreBukkitAPI::isAdminPlayer);
     }
@@ -47,6 +53,7 @@ public class ListenerPacket {
                             return;
                         }
                         future.complete(TResult.SUCCESS);
+                        Bukkit.getPluginManager().callEvent(new PlayerTeleportServerEvent(player, null));
                         KirraCoreBukkitAPI.getTELEPORTING_MAP().remove(player.getUniqueId());
                     });
             return;
@@ -56,11 +63,14 @@ public class ListenerPacket {
                     .stream()
                     .map(ClientManagerAPI::getUserUUID)
                     .collect(Collectors.toList());
-            if (packet.getAssignType() == AssignType.ASSIGN_WORLD) {
-                uuids.forEach(uuid -> KirraCoreBukkit.getInstance().getProfileManager().getASSIGN_WORLD().put(uuid, packet.getAssignValue()));
-            }
-            if (packet.getAssignType() == AssignType.ASSIGN_COORD) {
-                uuids.forEach(uuid -> KirraCoreBukkit.getInstance().getProfileManager().getASSIGN_COORD().put(uuid, packet.getAssignValue()));
+            switch (packet.getAssignType()) {
+                case ASSIGN_WORLD:
+                    uuids.forEach(uuid -> KirraCoreBukkit.getInstance().getProfileManager().getASSIGN_WORLD().put(uuid, packet.getAssignValue()));
+                    return;
+                case ASSIGN_COORD:
+                    uuids.forEach(uuid -> KirraCoreBukkit.getInstance().getProfileManager().getASSIGN_COORD().put(uuid, packet.getAssignValue()));
+                    return;
+                default:
             }
         }
     }
@@ -76,9 +86,9 @@ public class ListenerPacket {
                         if (future == null) {
                             return;
                         }
-                        future.complete(TResult.SERVER_CLOSED);
+                        future.complete(TResult.FAILED);
+                        Bukkit.getPluginManager().callEvent(new PlayerTeleportServerEvent(player, packet.getReason()));
                         KirraCoreBukkitAPI.getTELEPORTING_MAP().remove(player.getUniqueId());
-                        new TeleportServerFailedEvent(player).call();
                     });
         }
     }
