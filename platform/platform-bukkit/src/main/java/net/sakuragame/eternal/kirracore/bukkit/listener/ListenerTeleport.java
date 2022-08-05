@@ -17,7 +17,7 @@ public class ListenerTeleport implements Listener {
 
     @EventHandler
     public void onTeleportFailed(PlayerTeleportServerEvent event) {
-        if (event.getResult() == TResult.SUCCESS) {
+        if (!event.isFailed()) {
             return;
         }
         val player = event.getPlayer();
