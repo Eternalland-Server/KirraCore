@@ -1,4 +1,5 @@
 settings:
+  parent-server: false
   teleport-when-join: true
   allowed-pvp: false
   convert:

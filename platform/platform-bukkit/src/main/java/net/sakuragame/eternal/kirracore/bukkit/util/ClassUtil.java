@@ -22,7 +22,6 @@ public class ClassUtil {
         CodeSource codeSource = plugin.getClass().getProtectionDomain().getCodeSource();
         URL resource = codeSource.getLocation();
         String relPath = packageName.replace('.', '/');
-//        String resPath = resource.getPath().replace("%20", " ");
         String resPath;
         try {
             resPath = URLDecoder.decode(resource.getPath(), " ");

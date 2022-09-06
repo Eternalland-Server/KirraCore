@@ -1,5 +1,6 @@
 package net.sakuragame.eternal.kirracore.bukkit.listener;
 
+import net.sakuragame.eternal.kirracore.bukkit.KConfiguration;
 import net.sakuragame.eternal.kirracore.bukkit.function.FunctionRestart;
 import net.sakuragame.eternal.kirracore.bukkit.util.Scheduler;
 import net.sakuragame.eternal.kirracore.bukkit.util.Utils;
@@ -17,6 +18,10 @@ public class ListenerRestart implements Listener {
 
     @EventHandler
     public void onDay(NewDayEvent event) {
+        if (!KConfiguration.isParentServer()) {
+            Scheduler.runLater(() -> FunctionRestart.execute(30, "定时任务"), 20 * 60);
+            return;
+        }
         FunctionRestart.execute(30, "定时任务");
     }
 }

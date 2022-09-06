@@ -5,6 +5,7 @@ import lombok.val;
 import lombok.var;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.sakuragame.eternal.kirracore.bukkit.KConfiguration;
 import net.sakuragame.eternal.kirracore.bukkit.KirraCoreBukkit;
 import net.sakuragame.eternal.kirracore.bukkit.util.Utils;
 import net.sakuragame.eternal.kirracore.common.annotation.KListener;
@@ -19,7 +20,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-@SuppressWarnings("ConstantConditions")
 @KListener
 public class ListenerCommon implements Listener {
 
@@ -28,7 +28,7 @@ public class ListenerCommon implements Listener {
         val player = e.getPlayer();
         player.sendTitle("", "", 0, 1, 0);
         player.resetTitle();
-        if (KirraCoreBukkit.getInstance().getConfig().getBoolean("settings.teleport-when-join")) {
+        if (KConfiguration.isTeleportWhenJoin()) {
             val loc = KirraCoreBukkit.getInstance().getCompatManager().getMultiverseCore().getMVWorldManager().getMVWorld("world").getSpawnLocation();
             player.teleport(loc);
         }
@@ -41,7 +41,7 @@ public class ListenerCommon implements Listener {
         if (entity == null || attacker == null) {
             return;
         }
-        if (!KirraCoreBukkit.getInstance().getKConfiguration().getALLOWED_PVP().get()) {
+        if (!KConfiguration.isAllowedPvP()) {
             return;
         }
         event.setCancelled(true);

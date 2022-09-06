@@ -37,9 +37,6 @@ public class KirraCoreBukkit extends JavaPlugin {
     private Honcho honcho;
 
     @Getter
-    private KConfiguration kConfiguration;
-
-    @Getter
     private Database database;
 
     @Getter
@@ -59,7 +56,6 @@ public class KirraCoreBukkit extends JavaPlugin {
 
         chainFactory = new TaskChainFactory(this);
         honcho = new Honcho(this);
-        kConfiguration = new KConfiguration();
         database = new Database();
 
         initListeners();
